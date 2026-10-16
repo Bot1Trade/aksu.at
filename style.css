@@ -12,7 +12,12 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  background:var(--bg); color:var(--ink);
+  background:
+    radial-gradient(900px 500px at 10% -10%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+    radial-gradient(700px 500px at 110% 10%, color-mix(in srgb, #e0a458 16%, transparent), transparent 70%),
+    var(--bg);
+  background-attachment:fixed;
+  color:var(--ink);
   font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
   min-height:100vh; display:flex; flex-direction:column;
   -webkit-font-smoothing:antialiased;
