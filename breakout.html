@@ -9,11 +9,10 @@
 <title>Breakout · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='6' y='8' width='16' height='8' rx='2' fill='%23fb7185'/><rect x='24' y='8' width='16' height='8' rx='2' fill='%23fbbf24'/><rect x='42' y='8' width='16' height='8' rx='2' fill='%232dd4bf'/><circle cx='34' cy='38' r='5' fill='white'/><rect x='18' y='52' width='28' height='6' rx='3' fill='%237c9cff'/></svg>">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=4">
-<script src="common.js?v=1"></script>
+<link rel="preload" href="font-space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="font-inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css?v=5">
+<script src="common.js?v=2"></script>
 <style>
   .stage{position:relative;max-width:480px;margin:0 auto}
   canvas{display:block;width:100%;aspect-ratio:3/4;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid var(--line);touch-action:none;cursor:none}
@@ -50,7 +49,7 @@ function buildBricks(){bricks=[];const cols=8,rows=Math.min(4+level,7),gap=6,bw=
 function resetBall(){stuck=true;ball={x:pad.x,y:pad.y-12,r:7,vx:0,vy:0}}
 function speed(){return 5+level*.6}
 function launch(){if(!stuck)return;stuck=false;const a=-Math.PI/2+(Math.random()-.5)*.8;ball.vx=Math.cos(a)*speed();ball.vy=Math.sin(a)*speed()}
-function hud(){$('score').textContent=score;$('level').textContent=level;$('lives').textContent='❤'.repeat(Math.max(lives,0))||'–';
+function hud(){AKSU.report('breakout',{score,level});$('score').textContent=score;$('level').textContent=level;$('lives').textContent='❤'.repeat(Math.max(lives,0))||'–';
   if(score>best){best=score;$('best').textContent=best;try{localStorage.setItem('breakout-best',best)}catch(e){}}}
 function start(){score=0;lives=3;level=1;pad={x:Wd/2,y:Ht-36,w:96,h:12};buildBricks();resetBall();hud();running=true;$('ov').hidden=true;AKSU.played('breakout');last=performance.now();requestAnimationFrame(loop)}
 function burst(x,y,c){for(let i=0;i<14;i++){const a=Math.random()*Math.PI*2,v=1+Math.random()*3;parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,c})}}

@@ -8,12 +8,11 @@
 <link rel="canonical" href="https://aksu.at/snake.html">
 <title>Snake · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>🐍</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="font-space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="font-inter-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="style.css?v=4">
-<script src="common.js?v=1"></script>
+<link rel="stylesheet" href="style.css?v=5">
+<script src="common.js?v=2"></script>
 <style>
   canvas{display:block;width:100%;max-width:420px;aspect-ratio:1;margin:0 auto;border-radius:12px;background:var(--soft);touch-action:none}
   .pad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,48px);gap:6px;justify-content:center;margin-top:16px}
@@ -62,7 +61,7 @@ function tick(){
   const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
   if(h.x<0||h.y<0||h.x>=N||h.y>=N||snake.some(p=>p.x===h.x&&p.y===h.y))return end();
   snake.unshift(h);
-  if(h.x===food.x&&h.y===food.y){score++;$s.textContent=score;spawn();if(score>=20)AKSU.achieve('snake20')}else snake.pop();
+  if(h.x===food.x&&h.y===food.y){score++;$s.textContent=score;spawn();if(score>=20)AKSU.achieve('snake20');AKSU.report('snake',{score})}else snake.pop();
   draw();loop=setTimeout(tick,speed());
 }
 function draw(){

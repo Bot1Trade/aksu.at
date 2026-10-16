@@ -8,12 +8,11 @@
 <link rel="canonical" href="https://aksu.at/2048.html">
 <title>2048 · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23edc22e'/><text x='32' y='42' font-family='Arial' font-weight='bold' font-size='22' fill='white' text-anchor='middle'>2048</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="font-space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="font-inter-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="style.css?v=4">
-<script src="common.js?v=1"></script>
+<link rel="stylesheet" href="style.css?v=5">
+<script src="common.js?v=2"></script>
 <style>
   .g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px;background:var(--soft);border-radius:14px;
      max-width:400px;margin:0 auto;touch-action:none;user-select:none}
@@ -57,7 +56,7 @@ function add(){
 }
 function render(){
   grid.forEach((v,i)=>{const t=tiles[i];t.textContent=v||'';t.className='t'+(v?(' v'+(v>2048?'big':v)):'')+(fresh.has(i)?' pop':'')});
-  fresh.clear();$s.textContent=score;
+  fresh.clear();$s.textContent=score;AKSU.report('2048',{score,tile:Math.max(...grid)});
   if(score>best){best=score;$b.textContent=best;try{localStorage.setItem('2048-best',best)}catch(e){}}
 }
 function init(){grid=new Array(16).fill(0);score=0;won=false;over=false;msg.textContent='';add();add();render()}

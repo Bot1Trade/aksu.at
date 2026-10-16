@@ -1,4 +1,14 @@
 /* aksu.at – gemeinsames Design (dunkel, Aurora) */
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url(font-inter-400.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url(font-inter-500.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url(font-inter-600.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url(font-inter-700.woff2) format("woff2")}
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:500;font-display:swap;src:url(font-space-grotesk-500.woff2) format("woff2")}
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:600;font-display:swap;src:url(font-space-grotesk-600.woff2) format("woff2")}
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:700;font-display:swap;src:url(font-space-grotesk-700.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400;font-display:swap;src:url(font-jetbrains-mono-400.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:500;font-display:swap;src:url(font-jetbrains-mono-500.woff2) format("woff2")}
+
 :root{
   --bg:#07090f; --card:rgba(255,255,255,.04); --card-solid:#0f1420; --ink:#f2f4f8; --muted:#8b95a7;
   --accent:#7c9cff; --accent-2:#c084fc; --accent-3:#2dd4bf; --accent-ink:#0a0d14;
@@ -59,3 +69,12 @@ button[aria-pressed="true"]{background:var(--ink);color:var(--accent-ink);border
 .hint{text-align:center;color:var(--muted);font-size:13px;margin-top:8px;line-height:1.5}
 footer{padding:28px 16px;text-align:center;font-size:13px;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Sanfte Übergänge zwischen Seiten (Chrome/Edge/Safari, sonst ohne Effekt) */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vt-out .22s ease both}
+::view-transition-new(root){animation:vt-in .32s cubic-bezier(.2,.8,.2,1) both}
+@keyframes vt-out{to{opacity:0;transform:scale(.985)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){@view-transition{navigation:none}}
+::selection{background:rgba(192,132,252,.35);color:#fff}

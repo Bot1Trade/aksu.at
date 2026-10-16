@@ -8,12 +8,11 @@
 <link rel="canonical" href="https://aksu.at/minesweeper.html">
 <title>Minesweeper · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>💣</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="font-space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="font-inter-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="style.css?v=4">
-<script src="common.js?v=1"></script>
+<link rel="stylesheet" href="style.css?v=5">
+<script src="common.js?v=2"></script>
 <style>
   .board{display:grid;gap:2px;user-select:none;-webkit-user-select:none;touch-action:manipulation;margin:0 auto}
   .c{aspect-ratio:1;border:0;border-radius:4px;padding:0;background:linear-gradient(145deg,rgba(124,156,255,.55),rgba(192,132,252,.45));opacity:.9;
@@ -111,7 +110,7 @@ function lose(i){
 function win(){
   over=true;clearInterval(timer);
   mines.forEach((m,k)=>{if(m&&!cells[k].classList.contains('flag'))cells[k].classList.add('flag')});$left.textContent=0;
-  msg.textContent=AKSU.t(`Geschafft in ${$time.textContent} Sekunden!`,`Cleared in ${$time.textContent} seconds!`);AKSU.achieve('mines');if(L===LEVELS[2])AKSU.achieve('minesHard');msg.style.color='var(--ok)';
+  msg.textContent=AKSU.t(`Geschafft in ${$time.textContent} Sekunden!`,`Cleared in ${$time.textContent} seconds!`);AKSU.achieve('mines');AKSU.report('minesweeper',{time:+$time.textContent});if(L===LEVELS[2])AKSU.achieve('minesHard');msg.style.color='var(--ok)';
 }
 
 // Eingabe: Klick, Rechtsklick, langes Drücken

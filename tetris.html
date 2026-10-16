@@ -9,11 +9,10 @@
 <title>Tetris · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='4' y='24' width='18' height='18' rx='3' fill='%23c084fc'/><rect x='23' y='24' width='18' height='18' rx='3' fill='%23c084fc'/><rect x='42' y='24' width='18' height='18' rx='3' fill='%23c084fc'/><rect x='23' y='5' width='18' height='18' rx='3' fill='%23c084fc'/></svg>">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=4">
-<script src="common.js?v=1"></script>
+<link rel="preload" href="font-space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="font-inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css?v=5">
+<script src="common.js?v=2"></script>
 <style>
   .layout{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
   canvas#c{display:block;width:100%;max-width:300px;aspect-ratio:1/2;margin:0 auto;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid var(--line);touch-action:none}
@@ -89,7 +88,7 @@ function lock(){
   hud();spawn();
 }
 function hud(){$('score').textContent=score;$('lines').textContent=lines;$('level').textContent=level;
-  if(score>=1000)AKSU.achieve('tetris1000');if(score>best){best=score;$('best').textContent=best;try{localStorage.setItem('tetris-best',best)}catch(e){}}}
+  if(score>=1000)AKSU.achieve('tetris1000');AKSU.report('tetris',{score,lines});if(score>best){best=score;$('best').textContent=best;try{localStorage.setItem('tetris-best',best)}catch(e){}}}
 function cell(g,x,y,s,col,ghost){g.save();if(ghost){g.globalAlpha=.22}
   const gr=g.createLinearGradient(x,y,x+s,y+s);gr.addColorStop(0,col);gr.addColorStop(1,shade(col));g.fillStyle=gr;
   g.beginPath();g.roundRect(x+1,y+1,s-2,s-2,5);g.fill();g.globalAlpha=ghost?.15:.35;g.fillStyle='#fff';g.fillRect(x+4,y+3,s-8,2);g.restore()}

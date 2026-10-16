@@ -8,12 +8,11 @@
 <link rel="canonical" href="https://aksu.at/tictactoe.html">
 <title>Tic-Tac-Toe · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>⭕</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="font-space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="font-inter-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="style.css?v=4">
-<script src="common.js?v=1"></script>
+<link rel="stylesheet" href="style.css?v=5">
+<script src="common.js?v=2"></script>
 <style>
   .ttt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:320px;margin:0 auto}
   .ttt button{aspect-ratio:1;justify-content:center;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:48px;border-radius:14px;padding:0}
@@ -75,7 +74,7 @@ function check(){
   const w=winner(b);if(!w)return;over=true;
   if(w.l)w.l.forEach(i=>cells[i].classList.add('win'));
   tally[w.p]++;document.getElementById('sx').textContent=tally.X;document.getElementById('so').textContent=tally.O;document.getElementById('sd').textContent=tally.D;
-  msg.textContent=w.p==='X'?AKSU.t('Du hast gewonnen!','You won!'):w.p==='O'?AKSU.t('Der Computer gewinnt.','The computer wins.'):AKSU.t('Unentschieden.','Draw.');if(w.p==='X')AKSU.achieve('tttWin');if(w.p==='D'&&level==='hard')AKSU.achieve('tttHard');
+  msg.textContent=w.p==='X'?AKSU.t('Du hast gewonnen!','You won!'):w.p==='O'?AKSU.t('Der Computer gewinnt.','The computer wins.'):AKSU.t('Unentschieden.','Draw.');if(w.p==='X'){AKSU.achieve('tttWin');AKSU.report('tictactoe',{win:1})}if(w.p==='D'&&level==='hard')AKSU.achieve('tttHard');
   msg.style.color=w.p==='X'?'var(--ok)':w.p==='O'?'var(--danger)':'';
 }
 function play(i){if(over||b[i])return;AKSU.played('tictactoe');set(i,'X');if(!over)setTimeout(ai,250)}

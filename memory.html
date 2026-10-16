@@ -9,11 +9,10 @@
 <title>Memory · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='6' y='10' width='24' height='44' rx='5' fill='%237c9cff'/><rect x='34' y='10' width='24' height='44' rx='5' fill='%23c084fc'/></svg>">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=4">
-<script src="common.js?v=1"></script>
+<link rel="preload" href="font-space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="font-inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css?v=5">
+<script src="common.js?v=2"></script>
 <style>
   .mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:440px;margin:0 auto;perspective:900px}
   .card{aspect-ratio:3/4;position:relative;cursor:pointer;border:0;background:none;padding:0;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.3,.7,.2,1)}
@@ -78,7 +77,7 @@ function win(){clearInterval(timer);
   let b=null;try{b=+localStorage.getItem(bestKey())||null}catch(e){}
   if(!b||moves<b){try{localStorage.setItem(bestKey(),moves)}catch(e){}$('msg').textContent=AKSU.t(`Neuer Rekord: ${moves} Züge in ${$('time').textContent}s!`,`New best: ${moves} moves in ${$('time').textContent}s!`)}
   else $('msg').textContent=AKSU.t(`Geschafft: ${moves} Züge in ${$('time').textContent}s`,`Done: ${moves} moves in ${$('time').textContent}s`);
-  AKSU.achieve('memory');if(n===8&&moves<=12)AKSU.achieve('memoryPro');
+  AKSU.achieve('memory');if(n===8&&moves<=12)AKSU.achieve('memoryPro');if(n===8)AKSU.report('memory',{moves4:moves});
   $('msg').style.color='var(--ok)';showBest()}
 document.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-n]').forEach(x=>x.setAttribute('aria-pressed','false'));
   b.setAttribute('aria-pressed','true');n=+b.dataset.n;init()});
