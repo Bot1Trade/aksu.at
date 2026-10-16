@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07090f">
+<meta name="description" content="Minesweeper im Browser – drei Schwierigkeitsstufen, Flaggen per Rechtsklick oder langem Drücken.">
+<link rel="canonical" href="https://aksu.at/minesweeper.html">
 <title>Minesweeper · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>💣</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="style.css?v=4">
+<script src="common.js?v=1"></script>
 <style>
   .board{display:grid;gap:2px;user-select:none;-webkit-user-select:none;touch-action:manipulation;margin:0 auto}
   .c{aspect-ratio:1;border:0;border-radius:4px;padding:0;background:linear-gradient(145deg,rgba(124,156,255,.55),rgba(192,132,252,.45));opacity:.9;
@@ -29,21 +32,21 @@
   <div class="top"><a class="back" href="./">← aksu</a><h1 style="font-size:26px">Minesweeper</h1></div>
   <div class="panel">
     <div class="bar">
-      <div class="levels" role="group" aria-label="Schwierigkeit">
-        <button data-l="0" aria-pressed="true">Leicht</button>
-        <button data-l="1">Mittel</button>
-        <button data-l="2">Schwer</button>
+      <div class="levels" role="group" aria-label="Schwierigkeit" data-en-label="Difficulty">
+        <button data-l="0" aria-pressed="true" data-en="Easy">Leicht</button>
+        <button data-l="1" data-en="Medium">Mittel</button>
+        <button data-l="2" data-en="Hard">Schwer</button>
       </div>
-      <button id="flagMode" aria-pressed="false" title="Flaggen-Modus für Touch">🚩 Flagge</button>
+      <button id="flagMode" aria-pressed="false" title="Flaggen-Modus für Touch" data-en="🚩 Flag">🚩 Flagge</button>
     </div>
     <div class="bar">
-      <span class="stat">Minen: <b id="left">0</b></span>
-      <span class="stat">Zeit: <b id="time">0</b>s</span>
-      <button class="primary" id="new">Neues Spiel</button>
+      <span class="stat"><span data-en="Mines">Minen</span>: <b id="left">0</b></span>
+      <span class="stat"><span data-en="Time">Zeit</span>: <b id="time">0</b>s</span>
+      <button class="primary" id="new" data-en="New game">Neues Spiel</button>
     </div>
     <div id="board" class="board"></div>
     <div class="msg" id="msg"></div>
-    <p class="hint">Rechtsklick oder langes Drücken setzt eine Flagge. Klick auf eine Zahl deckt die Nachbarn auf, wenn genug Flaggen gesetzt sind.</p>
+    <p class="hint" data-en="Right-click or long-press places a flag. Clicking a number reveals its neighbours once enough flags are set.">Rechtsklick oder langes Drücken setzt eine Flagge. Klick auf eine Zahl deckt die Nachbarn auf, wenn genug Flaggen gesetzt sind.</p>
   </div>
 </div>
 <script>
@@ -63,7 +66,7 @@ function init(){
   B.innerHTML='';B.style.gridTemplateColumns=`repeat(${L.w},1fr)`;B.style.maxWidth=(L.w*36)+'px';
   cells=[];
   for(let i=0;i<L.w*L.h;i++){
-    const b=document.createElement('button');b.className='c';b.dataset.i=i;b.setAttribute('aria-label','Feld');
+    const b=document.createElement('button');b.className='c';b.dataset.i=i;b.setAttribute('aria-label',AKSU.t('Feld','Cell'));
     cells.push(b);B.appendChild(b);
   }
   $left.textContent=L.m;
@@ -95,7 +98,7 @@ function toggleFlag(i){
 function act(i,flag){
   if(over)return;
   if(flag){toggleFlag(i);return}
-  if(!started){started=true;place(i);t0=Date.now();timer=setInterval(()=>$time.textContent=Math.floor((Date.now()-t0)/1000),250)}
+  if(!started){started=true;place(i);AKSU.played('minesweeper');t0=Date.now();timer=setInterval(()=>$time.textContent=Math.floor((Date.now()-t0)/1000),250)}
   const c=cells[i];
   if(c.classList.contains('open')){chord(i);return}
   open(i);
@@ -103,12 +106,12 @@ function act(i,flag){
 function lose(i){
   over=true;clearInterval(timer);
   mines.forEach((m,k)=>{if(m){cells[k].classList.add('open');cells[k].textContent='💣'}});
-  cells[i].classList.add('boom');msg.textContent='Boom! Versuch es nochmal.';msg.style.color='var(--danger)';
+  cells[i].classList.add('boom');msg.textContent=AKSU.t('Boom! Versuch es nochmal.','Boom! Try again.');msg.style.color='var(--danger)';
 }
 function win(){
   over=true;clearInterval(timer);
   mines.forEach((m,k)=>{if(m&&!cells[k].classList.contains('flag'))cells[k].classList.add('flag')});$left.textContent=0;
-  msg.textContent=`Geschafft in ${$time.textContent} Sekunden!`;msg.style.color='var(--ok)';
+  msg.textContent=AKSU.t(`Geschafft in ${$time.textContent} Sekunden!`,`Cleared in ${$time.textContent} seconds!`);AKSU.achieve('mines');if(L===LEVELS[2])AKSU.achieve('minesHard');msg.style.color='var(--ok)';
 }
 
 // Eingabe: Klick, Rechtsklick, langes Drücken

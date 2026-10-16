@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07090f">
+<meta name="description" content="Snake im Browser – mit Tastatur, Wischen oder Bildschirmknöpfen. Rekord wird gespeichert.">
+<link rel="canonical" href="https://aksu.at/snake.html">
 <title>Snake · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>🐍</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="style.css?v=4">
+<script src="common.js?v=1"></script>
 <style>
   canvas{display:block;width:100%;max-width:420px;aspect-ratio:1;margin:0 auto;border-radius:12px;background:var(--soft);touch-action:none}
   .pad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,48px);gap:6px;justify-content:center;margin-top:16px}
@@ -24,19 +27,19 @@
   <div class="top"><a class="back" href="./">← aksu</a><h1 style="font-size:26px">Snake</h1></div>
   <div class="panel">
     <div class="bar">
-      <span class="stat">Punkte: <b id="score">0</b></span>
-      <span class="stat">Rekord: <b id="best">0</b></span>
+      <span class="stat"><span data-en="Score">Punkte</span>: <b id="score">0</b></span>
+      <span class="stat"><span data-en="Best">Rekord</span>: <b id="best">0</b></span>
       <button class="primary" id="start">Start</button>
     </div>
-    <canvas id="c" width="400" height="400" aria-label="Spielfeld"></canvas>
-    <div class="pad" aria-label="Steuerung">
-      <button class="u" data-d="0,-1" aria-label="Hoch">▲</button>
-      <button class="l" data-d="-1,0" aria-label="Links">◀</button>
-      <button class="d" data-d="0,1" aria-label="Runter">▼</button>
-      <button class="r" data-d="1,0" aria-label="Rechts">▶</button>
+    <canvas id="c" width="400" height="400" aria-label="Spielfeld" data-en-label="Game board"></canvas>
+    <div class="pad" aria-label="Steuerung" data-en-label="Controls">
+      <button class="u" data-d="0,-1" aria-label="Hoch" data-en-label="Up">▲</button>
+      <button class="l" data-d="-1,0" aria-label="Links" data-en-label="Left">◀</button>
+      <button class="d" data-d="0,1" aria-label="Runter" data-en-label="Down">▼</button>
+      <button class="r" data-d="1,0" aria-label="Rechts" data-en-label="Right">▶</button>
     </div>
     <div class="msg" id="msg"></div>
-    <p class="hint">Pfeiltasten / WASD, Wischen oder die Knöpfe. Leertaste pausiert.</p>
+    <p class="hint" data-en="Arrow keys / WASD, swipe or the buttons. Space pauses.">Pfeiltasten / WASD, Wischen oder die Knöpfe. Leertaste pausiert.</p>
   </div>
 </div>
 <script>
@@ -59,7 +62,7 @@ function tick(){
   const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
   if(h.x<0||h.y<0||h.x>=N||h.y>=N||snake.some(p=>p.x===h.x&&p.y===h.y))return end();
   snake.unshift(h);
-  if(h.x===food.x&&h.y===food.y){score++;$s.textContent=score;spawn()}else snake.pop();
+  if(h.x===food.x&&h.y===food.y){score++;$s.textContent=score;spawn();if(score>=20)AKSU.achieve('snake20')}else snake.pop();
   draw();loop=setTimeout(tick,speed());
 }
 function draw(){
@@ -70,12 +73,12 @@ function draw(){
     const r=4;ctx.beginPath();ctx.roundRect(p.x*S+1,p.y*S+1,S-2,S-2,r);ctx.fill()});
   ctx.globalAlpha=1;
 }
-function start(){clearTimeout(loop);reset();running=true;paused=false;btn.textContent='Neu starten';loop=setTimeout(tick,speed())}
+function start(){clearTimeout(loop);reset();running=true;paused=false;btn.textContent=AKSU.t('Neu starten','Restart');AKSU.played('snake');loop=setTimeout(tick,speed())}
 function end(){
   running=false;clearTimeout(loop);
-  if(score>best){best=score;$b.textContent=best;try{localStorage.setItem('snake-best',best)}catch(e){}msg.textContent=`Neuer Rekord: ${score}!`;msg.style.color='var(--ok)'}
-  else{msg.textContent=`Game over – ${score} Punkte`;msg.style.color='var(--danger)'}
-  btn.textContent='Nochmal';
+  if(score>best){best=score;$b.textContent=best;try{localStorage.setItem('snake-best',best)}catch(e){}msg.textContent=AKSU.t(`Neuer Rekord: ${score}!`,`New best: ${score}!`);msg.style.color='var(--ok)'}
+  else{msg.textContent=AKSU.t(`Game over – ${score} Punkte`,`Game over – ${score} points`);msg.style.color='var(--danger)'}
+  btn.textContent=AKSU.t('Nochmal','Play again');
 }
 function turn(x,y){if(!running){start()}queue.push({x,y});if(queue.length>3)queue.shift()}
 

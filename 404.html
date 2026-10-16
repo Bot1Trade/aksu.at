@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css?v=4">
+<script src="/common.js?v=1"></script>
 <style>
   body{justify-content:center}
   .box{max-width:640px;margin:0 auto;padding:48px 20px;text-align:center}
@@ -55,7 +56,7 @@
   </div>
 </div>
 <script>
-const de=(navigator.language||'de').toLowerCase().startsWith('de')&&(function(){try{return localStorage.getItem('lang')!=='en'}catch(e){return true}})();
+const de=AKSU.lang==='de';AKSU.achieve('lost');
 const $=id=>document.getElementById(id);
 if(!de){document.documentElement.lang='en';$('h').textContent='This page got lost.';$('s').textContent='This address doesn’t exist (anymore):';
   $('home').textContent='Back to home';$('games').textContent='To the games';$('lbl').textContent='While you’re here: catch the square!';$('re').textContent='Restart'}

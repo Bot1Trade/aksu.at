@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07090f">
+<meta name="description" content="Tetris im Browser – mit Vorschau, Geisterstein, Levels und Touch-Steuerung.">
+<link rel="canonical" href="https://aksu.at/tetris.html">
 <title>Tetris · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='4' y='24' width='18' height='18' rx='3' fill='%23c084fc'/><rect x='23' y='24' width='18' height='18' rx='3' fill='%23c084fc'/><rect x='42' y='24' width='18' height='18' rx='3' fill='%23c084fc'/><rect x='23' y='5' width='18' height='18' rx='3' fill='%23c084fc'/></svg>">
 <link rel="manifest" href="manifest.webmanifest">
@@ -11,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css?v=4">
+<script src="common.js?v=1"></script>
 <style>
   .layout{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
   canvas#c{display:block;width:100%;max-width:300px;aspect-ratio:1/2;margin:0 auto;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid var(--line);touch-action:none}
@@ -35,26 +38,26 @@
   <div class="panel">
     <div class="layout">
       <div class="overlay">
-        <canvas id="c" width="300" height="600" aria-label="Spielfeld"></canvas>
-        <div class="ov" id="ov"><div><h2 id="ovT">Tetris</h2><p class="hint" id="ovP" style="margin-bottom:14px">Reihen voll machen, bevor es oben ankommt.</p><button class="primary" id="go">Start</button></div></div>
+        <canvas id="c" width="300" height="600" aria-label="Spielfeld" data-en-label="Game board"></canvas>
+        <div class="ov" id="ov"><div><h2 id="ovT">Tetris</h2><p class="hint" id="ovP" style="margin-bottom:14px" data-en="Fill rows before the stack reaches the top.">Reihen voll machen, bevor es oben ankommt.</p><button class="primary" id="go">Start</button></div></div>
       </div>
       <div class="side">
-        <div class="box"><small>Nächster</small><canvas id="next" width="72" height="72"></canvas></div>
-        <div class="box"><small>Punkte</small><b id="score">0</b></div>
-        <div class="box"><small>Reihen</small><b id="lines">0</b></div>
+        <div class="box"><small data-en="Next">Nächster</small><canvas id="next" width="72" height="72"></canvas></div>
+        <div class="box"><small data-en="Score">Punkte</small><b id="score">0</b></div>
+        <div class="box"><small data-en="Lines">Reihen</small><b id="lines">0</b></div>
         <div class="box"><small>Level</small><b id="level">1</b></div>
-        <div class="box"><small>Rekord</small><b id="best">0</b></div>
-        <button id="pause">Pause</button>
+        <div class="box"><small data-en="Best">Rekord</small><b id="best">0</b></div>
+        <button id="pause" data-en="Pause">Pause</button>
       </div>
     </div>
-    <div class="pad" aria-label="Steuerung">
-      <button data-a="left" aria-label="Links">◀</button>
-      <button data-a="rotate" aria-label="Drehen">⟳</button>
-      <button data-a="right" aria-label="Rechts">▶</button>
-      <button data-a="down" aria-label="Runter">▼</button>
-      <button data-a="drop" aria-label="Fallen lassen">⤓</button>
+    <div class="pad" aria-label="Steuerung" data-en-label="Controls">
+      <button data-a="left" aria-label="Links" data-en-label="Left">◀</button>
+      <button data-a="rotate" aria-label="Drehen" data-en-label="Rotate">⟳</button>
+      <button data-a="right" aria-label="Rechts" data-en-label="Right">▶</button>
+      <button data-a="down" aria-label="Runter" data-en-label="Down">▼</button>
+      <button data-a="drop" aria-label="Fallen lassen" data-en-label="Hard drop">⤓</button>
     </div>
-    <p class="hint">← → bewegen · ↑ drehen · ↓ schneller · Leertaste fallen lassen · P Pause. Am Handy: Knöpfe oder wischen, tippen dreht.</p>
+    <p class="hint" data-en="← → move · ↑ rotate · ↓ soft drop · Space hard drop · P pause. On mobile: buttons or swipe, tap rotates.">← → bewegen · ↑ drehen · ↓ schneller · Leertaste fallen lassen · P Pause. Am Handy: Knöpfe oder wischen, tippen dreht.</p>
   </div>
 </div>
 <script>
@@ -82,11 +85,11 @@ function lock(){
   cur.m.forEach((row,r)=>row.forEach((v,c)=>{if(v&&cur.y+r>=0)board[cur.y+r][cur.x+c]=cur.k}));
   if(cur.y<0&&cur.m.some((row,r)=>row.some(v=>v)&&cur.y+r<0)){end();return}
   let cleared=0;for(let r=H-1;r>=0;r--){if(board[r].every(Boolean)){board.splice(r,1);board.unshift(Array(W).fill(null));cleared++;r++}}
-  if(cleared){lines+=cleared;score+=[0,100,300,500,800][cleared]*level;level=1+Math.floor(lines/10);dropMs=Math.max(80,800-(level-1)*70)}
+  if(cleared){if(cleared===4)AKSU.achieve('tetris4');lines+=cleared;score+=[0,100,300,500,800][cleared]*level;level=1+Math.floor(lines/10);dropMs=Math.max(80,800-(level-1)*70)}
   hud();spawn();
 }
 function hud(){$('score').textContent=score;$('lines').textContent=lines;$('level').textContent=level;
-  if(score>best){best=score;$('best').textContent=best;try{localStorage.setItem('tetris-best',best)}catch(e){}}}
+  if(score>=1000)AKSU.achieve('tetris1000');if(score>best){best=score;$('best').textContent=best;try{localStorage.setItem('tetris-best',best)}catch(e){}}}
 function cell(g,x,y,s,col,ghost){g.save();if(ghost){g.globalAlpha=.22}
   const gr=g.createLinearGradient(x,y,x+s,y+s);gr.addColorStop(0,col);gr.addColorStop(1,shade(col));g.fillStyle=gr;
   g.beginPath();g.roundRect(x+1,y+1,s-2,s-2,5);g.fill();g.globalAlpha=ghost?.15:.35;g.fillStyle='#fff';g.fillRect(x+4,y+3,s-8,2);g.restore()}
@@ -101,11 +104,11 @@ function drawNext(){nx.clearRect(0,0,72,72);const m=next.m,s=16,w=m[0].length*s,
   m.forEach((row,r)=>row.forEach((v,c)=>{if(v)cell(nx,(72-w)/2+c*s,(72-h)/2+r*s,s,COLORS[next.k])}))}
 function loop(t){if(!running)return;if(!paused){acc+=t-last;if(acc>dropMs){acc=0;down()}draw()}last=t;raf=requestAnimationFrame(loop)}
 function start(){board=Array.from({length:H},()=>Array(W).fill(null));score=0;lines=0;level=1;dropMs=800;acc=0;next=null;bag=[];
-  hud();spawn();running=true;paused=false;$('ov').hidden=true;last=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop)}
-function end(){running=false;draw();$('ovT').textContent='Game over';$('ovP').textContent=`${score} Punkte · ${lines} Reihen`;$('go').textContent='Nochmal';$('ov').hidden=false}
+  hud();spawn();running=true;paused=false;$('ov').hidden=true;AKSU.played('tetris');last=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop)}
+function end(){running=false;draw();$('ovT').textContent='Game over';$('ovP').textContent=AKSU.t(`${score} Punkte · ${lines} Reihen`,`${score} points · ${lines} lines`);$('go').textContent=AKSU.t('Nochmal','Play again');$('ov').hidden=false}
 function act(a){if(!running||paused)return;({left:()=>move(-1),right:()=>move(1),rotate,down:()=>{if(down())score+=1},drop})[a]();hud();draw()}
-function togglePause(){if(!running)return;paused=!paused;$('pause').textContent=paused?'Weiter':'Pause';
-  $('ovT').textContent='Pause';$('ovP').textContent='Kurz durchatmen.';$('go').textContent='Weiter';$('ov').hidden=!paused}
+function togglePause(){if(!running)return;paused=!paused;$('pause').textContent=paused?AKSU.t('Weiter','Resume'):'Pause';
+  $('ovT').textContent='Pause';$('ovP').textContent=AKSU.t('Kurz durchatmen.','Take a breath.');$('go').textContent=AKSU.t('Weiter','Resume');$('ov').hidden=!paused}
 addEventListener('keydown',e=>{const m={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'rotate',ArrowDown:'down',' ':'drop',a:'left',d:'right',w:'rotate',s:'down'};
   if(e.key==='p'||e.key==='P'||e.key==='Escape'){togglePause();return}
   const a=m[e.key];if(a){e.preventDefault();if(!running&&e.key===' '){start();return}act(a)}});

@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07090f">
+<meta name="description" content="Tic-Tac-Toe gegen den Computer – leicht oder unschlagbar.">
+<link rel="canonical" href="https://aksu.at/tictactoe.html">
 <title>Tic-Tac-Toe · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>⭕</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="style.css?v=4">
+<script src="common.js?v=1"></script>
 <style>
   .ttt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:320px;margin:0 auto}
   .ttt button{aspect-ratio:1;justify-content:center;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:48px;border-radius:14px;padding:0}
@@ -25,15 +28,15 @@
   <div class="top"><a class="back" href="./">← aksu</a><h1 style="font-size:26px">Tic-Tac-Toe</h1></div>
   <div class="panel">
     <div class="bar">
-      <div class="levels" role="group" aria-label="Gegner">
-        <button data-l="easy" aria-pressed="true">Leicht</button>
-        <button data-l="hard">Unschlagbar</button>
+      <div class="levels" role="group" aria-label="Gegner" data-en-label="Opponent">
+        <button data-l="easy" aria-pressed="true" data-en="Easy">Leicht</button>
+        <button data-l="hard" data-en="Unbeatable">Unschlagbar</button>
       </div>
-      <button class="primary" id="new">Neue Runde</button>
+      <button class="primary" id="new" data-en="New round">Neue Runde</button>
     </div>
     <div class="bar" style="justify-content:center;gap:20px">
-      <span class="stat">Du (X): <b id="sx">0</b></span>
-      <span class="stat">Unentschieden: <b id="sd">0</b></span>
+      <span class="stat"><span data-en="You">Du</span> (X): <b id="sx">0</b></span>
+      <span class="stat"><span data-en="Draws">Unentschieden</span>: <b id="sd">0</b></span>
       <span class="stat">Computer (O): <b id="so">0</b></span>
     </div>
     <div class="ttt" id="b"></div>
@@ -44,7 +47,7 @@
 const W=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 const B=document.getElementById('b'),msg=document.getElementById('msg');
 let b,over,level='easy',first='X',tally={X:0,O:0,D:0};
-const cells=[...Array(9)].map((_,i)=>{const c=document.createElement('button');c.setAttribute('aria-label','Feld '+(i+1));c.onclick=()=>play(i);B.appendChild(c);return c});
+const cells=[...Array(9)].map((_,i)=>{const c=document.createElement('button');c.setAttribute('aria-label',AKSU.t('Feld ','Cell ')+(i+1));c.onclick=()=>play(i);B.appendChild(c);return c});
 
 function winner(s){for(const l of W){const[a,c,d]=l;if(s[a]&&s[a]===s[c]&&s[a]===s[d])return{p:s[a],l}}return s.every(Boolean)?{p:'D'}:null}
 function minimax(s,p){
@@ -72,10 +75,10 @@ function check(){
   const w=winner(b);if(!w)return;over=true;
   if(w.l)w.l.forEach(i=>cells[i].classList.add('win'));
   tally[w.p]++;document.getElementById('sx').textContent=tally.X;document.getElementById('so').textContent=tally.O;document.getElementById('sd').textContent=tally.D;
-  msg.textContent=w.p==='X'?'Du hast gewonnen!':w.p==='O'?'Der Computer gewinnt.':'Unentschieden.';
+  msg.textContent=w.p==='X'?AKSU.t('Du hast gewonnen!','You won!'):w.p==='O'?AKSU.t('Der Computer gewinnt.','The computer wins.'):AKSU.t('Unentschieden.','Draw.');if(w.p==='X')AKSU.achieve('tttWin');if(w.p==='D'&&level==='hard')AKSU.achieve('tttHard');
   msg.style.color=w.p==='X'?'var(--ok)':w.p==='O'?'var(--danger)':'';
 }
-function play(i){if(over||b[i])return;set(i,'X');if(!over)setTimeout(ai,250)}
+function play(i){if(over||b[i])return;AKSU.played('tictactoe');set(i,'X');if(!over)setTimeout(ai,250)}
 function init(){
   b=Array(9).fill(null);over=false;msg.textContent='';cells.forEach(c=>{c.textContent='';c.className=''});
   if(first==='O')setTimeout(ai,250);

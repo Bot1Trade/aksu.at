@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07090f">
+<meta name="description" content="2048 im Browser – gleiche Zahlen zusammenschieben, per Tastatur oder Wischen.">
+<link rel="canonical" href="https://aksu.at/2048.html">
 <title>2048 · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23edc22e'/><text x='32' y='42' font-family='Arial' font-weight='bold' font-size='22' fill='white' text-anchor='middle'>2048</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="style.css?v=4">
+<script src="common.js?v=1"></script>
 <style>
   .g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px;background:var(--soft);border-radius:14px;
      max-width:400px;margin:0 auto;touch-action:none;user-select:none}
@@ -32,13 +35,13 @@
   <div class="top"><a class="back" href="./">← aksu</a><h1 style="font-size:26px">2048</h1></div>
   <div class="panel">
     <div class="bar">
-      <span class="stat">Punkte: <b id="score">0</b></span>
-      <span class="stat">Rekord: <b id="best">0</b></span>
-      <button class="primary" id="new">Neues Spiel</button>
+      <span class="stat"><span data-en="Score">Punkte</span>: <b id="score">0</b></span>
+      <span class="stat"><span data-en="Best">Rekord</span>: <b id="best">0</b></span>
+      <button class="primary" id="new" data-en="New game">Neues Spiel</button>
     </div>
     <div class="g" id="g" aria-live="polite"></div>
     <div class="msg" id="msg"></div>
-    <p class="hint">Pfeiltasten / WASD oder wischen. Gleiche Zahlen verschmelzen – erreiche 2048!</p>
+    <p class="hint" data-en="Arrow keys / WASD or swipe. Equal numbers merge – reach 2048!">Pfeiltasten / WASD oder wischen. Gleiche Zahlen verschmelzen – erreiche 2048!</p>
   </div>
 </div>
 <script>
@@ -62,7 +65,7 @@ function init(){grid=new Array(16).fill(0);score=0;won=false;over=false;msg.text
 function slide(line){
   const a=line.filter(v=>v),out=[];let gained=0;
   for(let i=0;i<a.length;i++){
-    if(a[i]===a[i+1]){const m=a[i]*2;out.push(m);gained+=m;if(m===2048&&!won){won=true;msg.textContent='2048! Du kannst weiterspielen.';msg.style.color='var(--ok)'}i++}
+    if(a[i]===a[i+1]){const m=a[i]*2;out.push(m);gained+=m;if(m>=512)AKSU.achieve('t512');if(m===2048&&!won){won=true;msg.textContent=AKSU.t('2048! Du kannst weiterspielen.','2048! You can keep going.');AKSU.achieve('t2048');msg.style.color='var(--ok)'}i++}
     else out.push(a[i]);
   }
   while(out.length<4)out.push(0);return{out,gained};
@@ -74,7 +77,7 @@ function move(d){ // 0 links,1 rechts,2 hoch,3 runter
     const {out,gained}=slide(idx.map(i=>grid[i]));
     idx.forEach((i,j)=>{if(grid[i]!==out[j])moved=true;grid[i]=out[j]});score+=gained;
   }
-  if(moved){add();render();if(!canMove()){over=true;msg.textContent=`Keine Züge mehr – ${score} Punkte`;msg.style.color='var(--danger)'}}
+  if(moved){AKSU.played('2048');add();render();if(!canMove()){over=true;msg.textContent=AKSU.t(`Keine Züge mehr – ${score} Punkte`,`No moves left – ${score} points`);msg.style.color='var(--danger)'}}
 }
 function canMove(){
   if(grid.includes(0))return true;

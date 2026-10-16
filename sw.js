@@ -1,6 +1,6 @@
 /* aksu.at Service Worker – offline spielbar, Updates kommen automatisch */
-const CACHE = 'aksu-v4';
-const CORE = ['/', '/index.html', '/style.css?v=4', '/app.js', '/404.html',
+const CACHE = 'aksu-v5';
+const CORE = ['/', '/index.html', '/style.css?v=4', '/app.js', '/common.js?v=1', '/404.html',
   '/tetris.html', '/breakout.html', '/memory.html', '/minesweeper.html', '/snake.html', '/2048.html', '/tictactoe.html',
   '/icon-192.png', '/icon-512.png', '/manifest.webmanifest'];
 self.addEventListener('install', e => {
