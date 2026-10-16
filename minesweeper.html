@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minesweeper · aksu.at</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>💣</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .board{display:grid;gap:2px;user-select:none;-webkit-user-select:none;touch-action:manipulation;margin:0 auto}
+  .c{aspect-ratio:1;border:0;border-radius:4px;padding:0;background:var(--accent);opacity:.85;
+     font-weight:600;font-size:clamp(11px,3.4vw,16px);display:grid;place-items:center;color:var(--ink);cursor:pointer}
+  .c:hover{opacity:1}
+  .c.open{background:var(--soft);opacity:1;cursor:default}
+  .c.flag::after{content:"🚩";font-size:.9em}
+  .c.boom{background:var(--danger);opacity:1}
+  .n1{color:#2b6cb0}.n2{color:#2f855a}.n3{color:#c53030}.n4{color:#553c9a}.n5{color:#9c4221}.n6{color:#2c7a7b}.n7{color:#1a202c}.n8{color:#718096}
+  @media (prefers-color-scheme: dark){.n1{color:#90cdf4}.n2{color:#9ae6b4}.n3{color:#feb2b2}.n4{color:#d6bcfa}.n5{color:#fbd38d}.n6{color:#81e6d9}.n7{color:#e2e8f0}.n8{color:#a0aec0}}
+  .levels{display:flex;gap:6px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="./">← aksu.at</a><h1 style="font-size:24px">Minesweeper</h1></div>
+  <div class="panel">
+    <div class="bar">
+      <div class="levels" role="group" aria-label="Schwierigkeit">
+        <button data-l="0" aria-pressed="true">Leicht</button>
+        <button data-l="1">Mittel</button>
+        <button data-l="2">Schwer</button>
+      </div>
+      <button id="flagMode" aria-pressed="false" title="Flaggen-Modus für Touch">🚩 Flagge</button>
+    </div>
+    <div class="bar">
+      <span class="stat">Minen: <b id="left">0</b></span>
+      <span class="stat">Zeit: <b id="time">0</b>s</span>
+      <button class="primary" id="new">Neues Spiel</button>
+    </div>
+    <div id="board" class="board"></div>
+    <div class="msg" id="msg"></div>
+    <p class="hint">Rechtsklick oder langes Drücken setzt eine Flagge. Klick auf eine Zahl deckt die Nachbarn auf, wenn genug Flaggen gesetzt sind.</p>
+  </div>
+</div>
+<script>
+const LEVELS=[{w:9,h:9,m:10},{w:12,h:12,m:24},{w:16,h:16,m:40}];
+let L=LEVELS[0],cells,mines,opened,flags,started,over,timer,t0,flagMode=false;
+const B=document.getElementById('board'),msg=document.getElementById('msg');
+const $left=document.getElementById('left'),$time=document.getElementById('time');
+
+function idx(x,y){return y*L.w+x}
+function nb(i){const x=i%L.w,y=Math.floor(i/L.w),r=[];
+  for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){if(!dx&&!dy)continue;const nx=x+dx,ny=y+dy;
+    if(nx>=0&&ny>=0&&nx<L.w&&ny<L.h)r.push(idx(nx,ny))}return r}
+
+function init(){
+  clearInterval(timer);started=false;over=false;opened=0;flags=0;msg.textContent='';$time.textContent='0';
+  mines=new Array(L.w*L.h).fill(false);
+  B.innerHTML='';B.style.gridTemplateColumns=`repeat(${L.w},1fr)`;B.style.maxWidth=(L.w*36)+'px';
+  cells=[];
+  for(let i=0;i<L.w*L.h;i++){
+    const b=document.createElement('button');b.className='c';b.dataset.i=i;b.setAttribute('aria-label','Feld');
+    cells.push(b);B.appendChild(b);
+  }
+  $left.textContent=L.m;
+}
+function place(safe){
+  const forbidden=new Set([safe,...nb(safe)]);let n=0;
+  while(n<L.m){const r=Math.floor(Math.random()*mines.length);if(!mines[r]&&!forbidden.has(r)){mines[r]=true;n++}}
+}
+function count(i){return nb(i).filter(j=>mines[j]).length}
+function open(i){
+  const c=cells[i];if(c.classList.contains('open')||c.classList.contains('flag'))return;
+  if(mines[i]){lose(i);return}
+  const stack=[i];
+  while(stack.length){const k=stack.pop(),e=cells[k];
+    if(e.classList.contains('open')||e.classList.contains('flag'))continue;
+    e.classList.add('open');opened++;const n=count(k);
+    if(n){e.textContent=n;e.classList.add('n'+n)}else stack.push(...nb(k));
+  }
+  if(opened===L.w*L.h-L.m)win();
+}
+function chord(i){
+  const n=count(i),ns=nb(i);
+  if(ns.filter(j=>cells[j].classList.contains('flag')).length===n)ns.forEach(j=>{if(!over)open(j)});
+}
+function toggleFlag(i){
+  const c=cells[i];if(c.classList.contains('open')||over)return;
+  c.classList.toggle('flag');flags+=c.classList.contains('flag')?1:-1;$left.textContent=L.m-flags;
+}
+function act(i,flag){
+  if(over)return;
+  if(flag){toggleFlag(i);return}
+  if(!started){started=true;place(i);t0=Date.now();timer=setInterval(()=>$time.textContent=Math.floor((Date.now()-t0)/1000),250)}
+  const c=cells[i];
+  if(c.classList.contains('open')){chord(i);return}
+  open(i);
+}
+function lose(i){
+  over=true;clearInterval(timer);
+  mines.forEach((m,k)=>{if(m){cells[k].classList.add('open');cells[k].textContent='💣'}});
+  cells[i].classList.add('boom');msg.textContent='Boom! Versuch es nochmal.';msg.style.color='var(--danger)';
+}
+function win(){
+  over=true;clearInterval(timer);
+  mines.forEach((m,k)=>{if(m&&!cells[k].classList.contains('flag'))cells[k].classList.add('flag')});$left.textContent=0;
+  msg.textContent=`Geschafft in ${$time.textContent} Sekunden!`;msg.style.color='var(--ok)';
+}
+
+// Eingabe: Klick, Rechtsklick, langes Drücken
+let pressT=null,longFired=false;
+B.addEventListener('contextmenu',e=>{e.preventDefault();const c=e.target.closest('.c');if(c&&!longFired)act(+c.dataset.i,true)});
+B.addEventListener('pointerdown',e=>{
+  const c=e.target.closest('.c');if(!c||e.button===2)return;longFired=false;
+  if(e.pointerType!=='mouse')pressT=setTimeout(()=>{longFired=true;act(+c.dataset.i,true);navigator.vibrate&&navigator.vibrate(20)},400);
+});
+['pointerup','pointerleave','pointercancel'].forEach(t=>B.addEventListener(t,()=>clearTimeout(pressT)));
+B.addEventListener('click',e=>{
+  const c=e.target.closest('.c');if(!c)return;
+  if(longFired){longFired=false;return}
+  act(+c.dataset.i,flagMode&&!c.classList.contains('open'));
+});
+
+document.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('[data-l]').forEach(x=>x.setAttribute('aria-pressed','false'));
+  b.setAttribute('aria-pressed','true');L=LEVELS[+b.dataset.l];init();
+});
+document.getElementById('flagMode').onclick=e=>{flagMode=!flagMode;e.currentTarget.setAttribute('aria-pressed',flagMode)};
+document.getElementById('new').onclick=init;
+init();
+</script>
+</body>
+</html>

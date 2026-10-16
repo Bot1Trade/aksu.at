@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tic-Tac-Toe · aksu.at</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>⭕</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .ttt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:320px;margin:0 auto}
+  .ttt button{aspect-ratio:1;justify-content:center;font-family:Fraunces,Georgia,serif;font-size:44px;border-radius:14px;padding:0}
+  .ttt button.x{color:var(--accent)}.ttt button.o{color:var(--danger)}
+  .ttt button.win{background:var(--accent);color:var(--accent-ink)}
+  .levels{display:flex;gap:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="./">← aksu.at</a><h1 style="font-size:24px">Tic-Tac-Toe</h1></div>
+  <div class="panel">
+    <div class="bar">
+      <div class="levels" role="group" aria-label="Gegner">
+        <button data-l="easy" aria-pressed="true">Leicht</button>
+        <button data-l="hard">Unschlagbar</button>
+      </div>
+      <button class="primary" id="new">Neue Runde</button>
+    </div>
+    <div class="bar" style="justify-content:center;gap:20px">
+      <span class="stat">Du (X): <b id="sx">0</b></span>
+      <span class="stat">Unentschieden: <b id="sd">0</b></span>
+      <span class="stat">Computer (O): <b id="so">0</b></span>
+    </div>
+    <div class="ttt" id="b"></div>
+    <div class="msg" id="msg"></div>
+  </div>
+</div>
+<script>
+const W=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const B=document.getElementById('b'),msg=document.getElementById('msg');
+let b,over,level='easy',first='X',tally={X:0,O:0,D:0};
+const cells=[...Array(9)].map((_,i)=>{const c=document.createElement('button');c.setAttribute('aria-label','Feld '+(i+1));c.onclick=()=>play(i);B.appendChild(c);return c});
+
+function winner(s){for(const l of W){const[a,c,d]=l;if(s[a]&&s[a]===s[c]&&s[a]===s[d])return{p:s[a],l}}return s.every(Boolean)?{p:'D'}:null}
+function minimax(s,p){
+  const w=winner(s);if(w)return{score:w.p==='O'?10:w.p==='X'?-10:0};
+  let best={score:p==='O'?-99:99};
+  s.forEach((v,i)=>{if(v)return;s[i]=p;const r=minimax(s,p==='O'?'X':'O');s[i]=null;
+    r.score+= p==='O'?-0.1:0.1; // schnellere Siege bevorzugen
+    if(p==='O'?r.score>best.score:r.score<best.score)best={score:r.score,i}});
+  return best;
+}
+function ai(){
+  const free=b.map((v,i)=>v?null:i).filter(v=>v!==null);
+  let i;
+  if(level==='hard')i=minimax(b.slice(),'O').i;
+  else{ // leicht: gewinnt/blockt manchmal, sonst zufällig
+    const find=p=>free.find(k=>{const t=b.slice();t[k]=p;return winner(t)?.p===p});
+    if(Math.random()<.6)i=find('O');
+    if(i===undefined&&Math.random()<.4)i=find('X');
+    if(i===undefined)i=free[Math.floor(Math.random()*free.length)];
+  }
+  set(i,'O');
+}
+function set(i,p){b[i]=p;cells[i].textContent=p;cells[i].className=p.toLowerCase();check()}
+function check(){
+  const w=winner(b);if(!w)return;over=true;
+  if(w.l)w.l.forEach(i=>cells[i].classList.add('win'));
+  tally[w.p]++;document.getElementById('sx').textContent=tally.X;document.getElementById('so').textContent=tally.O;document.getElementById('sd').textContent=tally.D;
+  msg.textContent=w.p==='X'?'Du hast gewonnen!':w.p==='O'?'Der Computer gewinnt.':'Unentschieden.';
+  msg.style.color=w.p==='X'?'var(--ok)':w.p==='O'?'var(--danger)':'';
+}
+function play(i){if(over||b[i])return;set(i,'X');if(!over)setTimeout(ai,250)}
+function init(){
+  b=Array(9).fill(null);over=false;msg.textContent='';cells.forEach(c=>{c.textContent='';c.className=''});
+  if(first==='O')setTimeout(ai,250);
+  first=first==='X'?'O':'X'; // abwechselnd beginnen
+}
+document.querySelectorAll('[data-l]').forEach(x=>x.onclick=()=>{
+  document.querySelectorAll('[data-l]').forEach(y=>y.setAttribute('aria-pressed','false'));x.setAttribute('aria-pressed','true');level=x.dataset.l;first='X';init();
+});
+document.getElementById('new').onclick=init;
+init();
+</script>
+</body>
+</html>

@@ -4,71 +4,58 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>aksu.at</title>
-<meta name="description" content="Kontakt für Anfragen zur Domain aksu.at">
+<meta name="description" content="Kontakt für Anfragen zur Domain aksu.at – und ein paar kleine Spiele.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%231f3a5f'/><text x='32' y='44' font-family='Georgia,serif' font-size='36' fill='%23f4efe6' text-anchor='middle'>A</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-  :root{
-    --bg:#f6f3ee; --card:#ffffff; --ink:#1b2430; --muted:#5f6b78;
-    --accent:#1f3a5f; --accent-ink:#ffffff; --line:#e4ded4;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --bg:#11161d; --card:#18202a; --ink:#eef1f4; --muted:#9aa6b2;
-      --accent:#8fb3e0; --accent-ink:#0e1620; --line:#26313d;
-    }
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    background:var(--bg); color:var(--ink);
-    font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
-    display:flex; flex-direction:column; min-height:100vh;
-    -webkit-font-smoothing:antialiased;
-  }
-  main{flex:1; display:grid; place-items:center; padding:48px 16px}
-  .card{
-    width:100%; max-width:520px; background:var(--card);
-    border:1px solid var(--line); border-radius:20px;
-    padding:48px 40px; text-align:center;
-    box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.06);
-  }
-  .mark{
-    width:56px;height:56px;border-radius:14px;margin:0 auto 28px;
-    background:var(--accent);color:var(--accent-ink);
-    display:grid;place-items:center;
-    font-family:Fraunces,Georgia,serif;font-size:30px;font-weight:600;
-  }
-  h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:40px;letter-spacing:-.01em}
-  p.lead{margin:16px auto 32px;color:var(--muted);line-height:1.6;max-width:36ch}
-  a.btn{
-    display:inline-flex;align-items:center;gap:10px;
-    background:var(--accent);color:var(--accent-ink);text-decoration:none;
-    padding:14px 22px;border-radius:12px;font-weight:500;
-    transition:transform .15s ease, opacity .15s ease;
-  }
-  a.btn:hover{opacity:.92;transform:translateY(-1px)}
-  a.btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-  .addr{margin-top:16px;font-size:14px;color:var(--muted);word-break:break-all}
-  footer{padding:24px 16px;text-align:center;font-size:13px;color:var(--muted)}
-  @media (max-width:480px){ .card{padding:36px 24px} h1{font-size:32px} }
+  .hero{text-align:center;padding:40px 32px}
+  .mark{width:56px;height:56px;border-radius:14px;margin:0 auto 24px;background:var(--accent);color:var(--accent-ink);
+    display:grid;place-items:center;font-family:Fraunces,Georgia,serif;font-size:30px;font-weight:600}
+  .hero h1{font-size:40px}
+  .lead{margin:16px auto 28px;color:var(--muted);line-height:1.6;max-width:36ch}
+  .hero .btn.primary{padding:14px 22px;border-radius:12px;font-size:15px}
+  .addr{margin-top:14px;font-size:14px;color:var(--muted);word-break:break-all}
+  .games{margin-top:40px}
+  .games h2{font-size:22px;margin-bottom:4px}
+  .games p{color:var(--muted);font-size:14px;margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .tile{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;
+    transition:transform .15s ease,border-color .15s ease}
+  .tile:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .tile:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .ico{font-size:26px;line-height:1;margin-bottom:10px}
+  .tile b{display:block;font-weight:500}
+  .tile span{font-size:13px;color:var(--muted)}
+  @media (max-width:480px){.hero{padding:32px 20px}.hero h1{font-size:32px}}
 </style>
 </head>
 <body>
-<main>
-  <div class="card">
+<div class="wrap">
+  <section class="panel hero">
     <div class="mark" aria-hidden="true">A</div>
     <h1>aksu.at</h1>
     <p class="lead">Sie haben Fragen oder ein Anliegen zu dieser Domain? Ich freue mich über Ihre Nachricht.</p>
-    <a class="btn" href="mailto:mikail@aksu.at?subject=Anfrage%20zur%20Domain%20aksu.at">
+    <a class="btn primary" href="mailto:mikail@aksu.at?subject=Anfrage%20zur%20Domain%20aksu.at">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
       Kontakt aufnehmen
     </a>
     <div class="addr">mikail@aksu.at</div>
-  </div>
-</main>
+  </section>
+
+  <section class="games" aria-labelledby="g">
+    <h2 id="g">Kleine Pause?</h2>
+    <p>Ein paar Spiele für zwischendurch.</p>
+    <div class="grid">
+      <a class="tile" href="minesweeper.html"><div class="ico">💣</div><b>Minesweeper</b><span>Finde alle Minen</span></a>
+      <a class="tile" href="snake.html"><div class="ico">🐍</div><b>Snake</b><span>Wachsen ohne anzustoßen</span></a>
+      <a class="tile" href="2048.html"><div class="ico">🔢</div><b>2048</b><span>Zahlen zusammenschieben</span></a>
+      <a class="tile" href="tictactoe.html"><div class="ico">⭕</div><b>Tic-Tac-Toe</b><span>Gegen den Computer</span></a>
+    </div>
+  </section>
+</div>
 <footer>© <span id="y">2026</span> Mikail Aksu</footer>
 <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 </body>

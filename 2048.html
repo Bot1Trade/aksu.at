@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2048 · aksu.at</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23edc22e'/><text x='32' y='42' font-family='Arial' font-weight='bold' font-size='22' fill='white' text-anchor='middle'>2048</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px;background:var(--soft);border-radius:14px;
+     max-width:400px;margin:0 auto;touch-action:none;user-select:none}
+  .t{aspect-ratio:1;border-radius:8px;display:grid;place-items:center;font-weight:700;font-size:clamp(18px,6vw,30px);
+     background:var(--card);color:var(--ink);transition:background .1s}
+  .t.pop{animation:pop .15s ease}
+  @keyframes pop{0%{transform:scale(.6)}100%{transform:scale(1)}}
+  .v2{background:#eee4da;color:#776e65}.v4{background:#ede0c8;color:#776e65}
+  .v8{background:#f2b179;color:#fff}.v16{background:#f59563;color:#fff}.v32{background:#f67c5f;color:#fff}
+  .v64{background:#f65e3b;color:#fff}.v128{background:#edcf72;color:#fff;font-size:clamp(16px,5vw,26px)}
+  .v256{background:#edcc61;color:#fff;font-size:clamp(16px,5vw,26px)}.v512{background:#edc850;color:#fff;font-size:clamp(16px,5vw,26px)}
+  .v1024,.v2048,.vbig{background:#edc22e;color:#fff;font-size:clamp(14px,4.2vw,22px)}
+  .vbig{background:#3c3a32}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="./">← aksu.at</a><h1 style="font-size:24px">2048</h1></div>
+  <div class="panel">
+    <div class="bar">
+      <span class="stat">Punkte: <b id="score">0</b></span>
+      <span class="stat">Rekord: <b id="best">0</b></span>
+      <button class="primary" id="new">Neues Spiel</button>
+    </div>
+    <div class="g" id="g" aria-live="polite"></div>
+    <div class="msg" id="msg"></div>
+    <p class="hint">Pfeiltasten / WASD oder wischen. Gleiche Zahlen verschmelzen – erreiche 2048!</p>
+  </div>
+</div>
+<script>
+const G=document.getElementById('g'),$s=document.getElementById('score'),$b=document.getElementById('best'),msg=document.getElementById('msg');
+let grid,score,best=0,won,over,fresh=new Set();
+try{best=+localStorage.getItem('2048-best')||0}catch(e){}
+$b.textContent=best;
+const tiles=[];for(let i=0;i<16;i++){const d=document.createElement('div');d.className='t';G.appendChild(d);tiles.push(d)}
+
+function add(){
+  const e=[];grid.forEach((v,i)=>{if(!v)e.push(i)});if(!e.length)return;
+  const i=e[Math.floor(Math.random()*e.length)];grid[i]=Math.random()<.9?2:4;fresh.add(i);
+}
+function render(){
+  grid.forEach((v,i)=>{const t=tiles[i];t.textContent=v||'';t.className='t'+(v?(' v'+(v>2048?'big':v)):'')+(fresh.has(i)?' pop':'')});
+  fresh.clear();$s.textContent=score;
+  if(score>best){best=score;$b.textContent=best;try{localStorage.setItem('2048-best',best)}catch(e){}}
+}
+function init(){grid=new Array(16).fill(0);score=0;won=false;over=false;msg.textContent='';add();add();render()}
+
+function slide(line){
+  const a=line.filter(v=>v),out=[];let gained=0;
+  for(let i=0;i<a.length;i++){
+    if(a[i]===a[i+1]){const m=a[i]*2;out.push(m);gained+=m;if(m===2048&&!won){won=true;msg.textContent='2048! Du kannst weiterspielen.';msg.style.color='var(--ok)'}i++}
+    else out.push(a[i]);
+  }
+  while(out.length<4)out.push(0);return{out,gained};
+}
+function move(d){ // 0 links,1 rechts,2 hoch,3 runter
+  if(over)return;let moved=false;
+  for(let k=0;k<4;k++){
+    const idx=[0,1,2,3].map(j=>d<2?k*4+j:j*4+k);if(d===1||d===3)idx.reverse();
+    const {out,gained}=slide(idx.map(i=>grid[i]));
+    idx.forEach((i,j)=>{if(grid[i]!==out[j])moved=true;grid[i]=out[j]});score+=gained;
+  }
+  if(moved){add();render();if(!canMove()){over=true;msg.textContent=`Keine Züge mehr – ${score} Punkte`;msg.style.color='var(--danger)'}}
+}
+function canMove(){
+  if(grid.includes(0))return true;
+  for(let i=0;i<16;i++){if(i%4<3&&grid[i]===grid[i+1])return true;if(i<12&&grid[i]===grid[i+4])return true}
+  return false;
+}
+const K={ArrowLeft:0,a:0,ArrowRight:1,d:1,ArrowUp:2,w:2,ArrowDown:3,s:3};
+addEventListener('keydown',e=>{const k=K[e.key]??K[e.key.toLowerCase?.()];if(k!==undefined){e.preventDefault();move(k)}});
+let sx,sy;
+G.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+G.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
+G.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+  if(Math.max(Math.abs(dx),Math.abs(dy))<25)return;
+  Math.abs(dx)>Math.abs(dy)?move(dx<0?0:1):move(dy<0?2:3)});
+document.getElementById('new').onclick=init;
+init();
+</script>
+</body>
+</html>
