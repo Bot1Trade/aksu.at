@@ -6,16 +6,29 @@
 <title>aksu · Domains</title>
 <meta name="description" content="aksu.at, aksu.co.at und aksu.ch – Anfragen zu den Domains an mikail@aksu.at.">
 <meta name="theme-color" content="#07090f">
-<meta property="og:title" content="aksu · Domains">
+<link rel="canonical" href="https://aksu.at/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aksu.at/">
+<meta property="og:site_name" content="aksu">
+<meta property="og:title" content="aksu · Drei Domains. Ein Ansprechpartner.">
 <meta property="og:description" content="aksu.at · aksu.co.at · aksu.ch – Anfragen an mikail@aksu.at">
+<meta property="og:image" content="https://aksu.at/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="de_AT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aksu.at/og.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c9cff'/><stop offset='.5' stop-color='%23c084fc'/><stop offset='1' stop-color='%232dd4bf'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(%23g)'/><text x='32' y='45' font-family='Arial' font-weight='bold' font-size='36' fill='%230a0d14' text-anchor='middle'>a</text></svg>">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 <style>
   .container{width:100%;max-width:1120px;margin:0 auto;padding:0 20px}
   section{scroll-margin-top:90px}
+  #bg{position:fixed;inset:0;z-index:-1;pointer-events:none}
 
   /* Navigation */
   nav{position:sticky;top:12px;z-index:50;margin:12px auto 0;width:calc(100% - 24px);max-width:1120px;
@@ -24,20 +37,27 @@
     backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%)}
   .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:"Space Grotesk";font-weight:700;font-size:18px}
   .logo{width:32px;height:32px;border-radius:9px;background:var(--grad);display:grid;place-items:center;color:var(--accent-ink);font-weight:700;font-size:18px}
-  .links{display:flex;gap:4px}
+  .links{display:flex;gap:2px}
   .links a{text-decoration:none;font-size:14px;color:var(--muted);padding:8px 12px;border-radius:10px}
   .links a:hover{color:var(--ink);background:var(--soft)}
-  @media (max-width:640px){.links{display:none}}
+  .tools{display:flex;gap:6px;align-items:center}
+  .seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .seg button{border:0;border-radius:0;padding:7px 10px;font-size:12px;font-family:"JetBrains Mono";background:transparent;color:var(--muted)}
+  .seg button[aria-pressed="true"]{background:var(--ink);color:var(--accent-ink)}
+  .icon-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:10px}
+  .icon-btn[aria-pressed="true"]{background:var(--soft);color:var(--accent-3);border-color:rgba(45,212,191,.4)}
+  @media (max-width:860px){.links{display:none}}
+  @media (max-width:420px){nav .btn.primary{display:none}}
 
   /* Hero */
   .hero{position:relative;text-align:center;padding:96px 0 40px}
   .pill{display:inline-flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);
     border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px 6px 10px;backdrop-filter:blur(10px)}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:ping 2s infinite}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:ping 2s infinite}
   @keyframes ping{0%{box-shadow:0 0 0 0 rgba(52,211,153,.55)}80%,100%{box-shadow:0 0 0 10px rgba(52,211,153,0)}}
-  .hero h1{font-size:clamp(64px,15vw,168px);line-height:.9;margin:28px 0 8px;letter-spacing:-.05em;font-weight:700}
+  .hero h1{font-size:clamp(64px,15vw,168px);line-height:.9;margin:28px 0 8px;letter-spacing:-.05em;font-weight:700;
+    display:flex;justify-content:center;align-items:baseline;white-space:nowrap}
   .hero h1 .word{background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,.55));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero h1{display:flex;justify-content:center;align-items:baseline;white-space:nowrap}
   .tld{display:inline-grid;transition:width .7s cubic-bezier(.7,0,.2,1)}
   .tld span{grid-area:1/1;width:max-content;opacity:0;transform:translateY(.35em);filter:blur(10px);
     background:var(--grad);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
@@ -54,17 +74,24 @@
   .btn.ok{color:var(--ok);border-color:rgba(52,211,153,.4)}
 
   /* Terminal */
-  .term{max-width:620px;margin:56px auto 0;text-align:left;border-radius:18px;overflow:hidden;
-    border:1px solid var(--line);background:rgba(8,10,16,.75);backdrop-filter:blur(14px);
-    box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.03) inset}
+  .term{max-width:680px;margin:56px auto 0;text-align:left;border-radius:18px;overflow:hidden;cursor:text;
+    border:1px solid var(--line);background:rgba(8,10,16,.8);backdrop-filter:blur(14px);
+    box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.03) inset;transition:box-shadow .3s,border-color .3s}
+  .term:focus-within{border-color:rgba(124,156,255,.45);box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 0 4px rgba(124,156,255,.12)}
   .term-head{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
   .term-head i{width:11px;height:11px;border-radius:50%;background:#ff5f57}
   .term-head i:nth-child(2){background:#febc2e}.term-head i:nth-child(3){background:#28c840}
-  .term-head span{margin-left:auto;margin-right:auto;transform:translateX(-22px)}
-  .term pre{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13.5px;line-height:1.75;padding:18px 20px;min-height:196px;white-space:pre-wrap;color:#c9d1e0}
-  .term .p{color:var(--accent-3)}.term .k{color:var(--muted)}.term .v{color:#fff}.term .g{color:var(--ok)}
+  .term-head .tt{margin:0 auto;transform:translateX(-22px)}
+  .term-head .th{font-family:"JetBrains Mono";font-size:11px;color:var(--accent)}
+  .term-body{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13.5px;line-height:1.7;padding:16px 20px;height:300px;overflow:auto;color:#c9d1e0;scrollbar-width:thin}
+  #out{white-space:pre-wrap;word-break:break-word}
+  .line{display:flex;gap:8px;align-items:center}
+  .line input{flex:1;background:transparent;border:0;outline:0;color:#fff;font:inherit;caret-color:var(--accent);padding:0;min-width:0}
+  .term .p{color:var(--accent-3)}.term .k{color:var(--muted)}.term .v{color:#fff}.term .g{color:var(--ok)}.term .e{color:var(--danger)}.term .a{color:var(--accent-2)}
+  .term a{color:var(--accent);text-decoration:none}
   .caret{display:inline-block;width:8px;height:1.1em;background:var(--accent);vertical-align:-3px;animation:blink 1s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
+  #matrix{position:fixed;inset:0;z-index:200;background:#000;display:none;cursor:pointer}
 
   /* Marquee */
   .marquee{margin:96px 0 0;overflow:hidden;border-block:1px solid var(--line);padding:22px 0;
@@ -84,7 +111,7 @@
   .sec h2 .mut{color:var(--muted)}
   .sec-head p{color:var(--muted);max-width:40ch;line-height:1.6}
 
-  /* Karten mit Spotlight */
+  /* Karten */
   .card{position:relative;border-radius:22px;border:1px solid var(--line);background:var(--card);
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow:hidden;
     transition:transform .25s ease,border-color .25s ease;transform-style:preserve-3d;will-change:transform}
@@ -111,79 +138,142 @@
   .dom:hover .go svg{transform:translateX(4px)}
   .dom.here{border-color:rgba(124,156,255,.35)}
   .here-tag{font-family:"JetBrains Mono";font-size:11px;color:var(--accent);border:1px solid rgba(124,156,255,.35);border-radius:999px;padding:3px 8px}
-
-  /* Zahlen */
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
   .stat-c{padding:26px 28px}
   .stat-c .n{font-family:"Space Grotesk";font-size:clamp(44px,6vw,64px);font-weight:700;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .stat-c .l{color:var(--muted);font-size:14px;margin-top:8px}
   @media (max-width:640px){.stats{grid-template-columns:1fr}}
 
+  /* Uhren */
+  .clocks{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:760px){.clocks{grid-template-columns:1fr}}
+  .clock{padding:28px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+  @media (max-width:420px){.clock{grid-template-columns:1fr;justify-items:center;text-align:center}}
+  .dial{width:150px;height:150px}
+  .dial .face{fill:rgba(255,255,255,.03);stroke:var(--line)}
+  .dial .tick{stroke:rgba(255,255,255,.25);stroke-width:2;stroke-linecap:round}
+  .dial .tick.big{stroke:rgba(255,255,255,.6);stroke-width:3}
+  .dial .h{stroke:#fff;stroke-width:5;stroke-linecap:round}
+  .dial .m{stroke:#fff;stroke-width:3.5;stroke-linecap:round;opacity:.85}
+  .dial .s{stroke:var(--danger);stroke-width:1.6;stroke-linecap:round}
+  .dial .hand{transform-origin:75px 75px}
+  .city{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk";font-size:24px;font-weight:600}
+  .city svg{width:26px;height:18px;border-radius:4px}
+  .digital{font-family:"JetBrains Mono";font-size:clamp(30px,4vw,40px);font-weight:500;letter-spacing:-.02em;margin-top:6px;font-variant-numeric:tabular-nums}
+  .digital .sec{padding:0;color:var(--muted);font-size:.6em}
+  .date{color:var(--muted);font-size:14px;margin-top:2px}
+  .wx{display:flex;align-items:center;gap:12px;margin-top:16px;padding:10px 14px;border-radius:14px;background:var(--soft);border:1px solid var(--line);width:max-content;max-width:100%}
+  .wx .ic{font-size:28px;line-height:1}
+  .wx b{font-family:"Space Grotesk";font-size:22px}
+  .wx small{display:block;color:var(--muted);font-size:12px}
+  .daynight{font-family:"JetBrains Mono";font-size:11px;color:var(--muted);margin-left:auto;padding-left:12px}
+
   /* Spiele */
   .games{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
   @media (max-width:880px){.games{grid-template-columns:repeat(2,1fr)}}
-  .game{padding:22px;display:flex;flex-direction:column;gap:18px;text-decoration:none;min-height:220px}
+  .game{padding:22px;display:flex;flex-direction:column;gap:18px;text-decoration:none;min-height:220px;cursor:pointer;text-align:left;font:inherit;color:inherit}
   .gico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;color:var(--c);
     background:color-mix(in srgb,var(--c) 16%,transparent);box-shadow:0 0 30px color-mix(in srgb,var(--c) 25%,transparent)}
   .game b{font-family:"Space Grotesk";font-size:20px;font-weight:600}
   .game span{color:var(--muted);font-size:13.5px;line-height:1.5}
   .game .play{margin-top:auto;font-size:13px;font-family:"JetBrains Mono";color:var(--c)}
+  .new{position:absolute;top:18px;right:18px;font-family:"JetBrains Mono";font-size:10px;letter-spacing:.1em;color:var(--accent-ink);background:var(--grad);border-radius:999px;padding:3px 8px}
   @media (max-width:480px){.game{padding:18px;min-height:200px}.games{gap:12px}}
 
   /* Kontakt */
-  .contact{margin:120px 0 0;padding:72px 28px;text-align:center;border-radius:32px}
-  .contact::before{opacity:1;background:radial-gradient(600px circle at 50% 0%,rgba(124,156,255,.22),transparent 60%)}
-  .contact h2{font-size:clamp(40px,7vw,80px);line-height:1}
-  .mail{display:inline-block;margin-top:24px;font-family:"Space Grotesk";font-weight:600;font-size:clamp(22px,4.4vw,40px);text-decoration:none;
+  .contact{margin:120px 0 0;padding:56px;border-radius:32px;display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start}
+  .contact::before{opacity:1;background:radial-gradient(600px circle at 0% 0%,rgba(124,156,255,.2),transparent 60%)}
+  .contact h2{font-size:clamp(40px,6vw,72px);line-height:1}
+  .mail{display:inline-block;margin-top:22px;font-family:"Space Grotesk";font-weight:600;font-size:clamp(22px,3vw,32px);text-decoration:none;
     background:var(--grad);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
-  .contact p{color:var(--muted);margin-top:14px}
+  .contact .note{color:var(--muted);margin-top:12px;line-height:1.6}
+  .contact .cta{justify-content:flex-start}
+  form{display:grid;gap:14px;position:relative}
+  .f2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:520px){.f2{grid-template-columns:1fr}}
+  label.fl{display:grid;gap:6px;font-size:13px;color:var(--muted)}
+  .fl input,.fl select,.fl textarea{font:inherit;font-size:15px;color:var(--ink);background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s;width:100%}
+  .fl textarea{min-height:130px;resize:vertical}
+  .fl select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+    background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;background-size:5px 5px;background-repeat:no-repeat}
+  .fl select option{background:#0f1420}
+  .fl input:focus,.fl select:focus,.fl textarea:focus{border-color:rgba(124,156,255,.6);box-shadow:0 0 0 4px rgba(124,156,255,.12)}
+  .hp{position:absolute;left:-9999px}
+  form .btn{justify-content:center;padding:14px 20px;border-radius:12px;font-size:15px}
+  .fmsg{font-size:14px;min-height:20px}
+  .fmsg.ok{color:var(--ok)}.fmsg.err{color:var(--danger)}
+  .small{font-size:12px;color:var(--muted)}
+  @media (max-width:880px){.contact{grid-template-columns:1fr;padding:36px 22px;gap:32px}}
 
   footer{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;max-width:1120px;width:100%;margin:56px auto 0;padding:28px 20px 40px;border-top:1px solid var(--line)}
   kbd{font-family:"JetBrains Mono";font-size:11px;border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--muted)}
 
-  /* Reveal */
   .rv{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
   .rv.in{opacity:1;transform:none}
-  .hero .rv{transition-duration:1.1s}
   #fx{position:fixed;inset:0;pointer-events:none;z-index:100}
   .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--card-solid);border:1px solid var(--line);
     padding:12px 18px;border-radius:12px;font-size:14px;z-index:101;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
   .toast.show{transform:translate(-50%,0)}
-  @media (max-width:640px){.hero{padding-top:64px}.sec{padding-top:88px}.contact{padding:56px 20px}}
+  .install{display:none}
+  .install.show{display:inline-flex}
+  @media (max-width:640px){.hero{padding-top:64px}.sec{padding-top:88px}}
 </style>
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="grid-bg" aria-hidden="true"></div>
+<canvas id="bg" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
 <canvas id="fx" aria-hidden="true"></canvas>
+<canvas id="matrix" aria-hidden="true" title="Klicken zum Schließen"></canvas>
 
 <nav aria-label="Hauptnavigation">
   <a class="brand" href="#top"><span class="logo">a</span>aksu</a>
-  <div class="links"><a href="#domains">Domains</a><a href="#spiele">Spiele</a><a href="#kontakt">Kontakt</a></div>
-  <a class="btn primary" href="mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu-Domains">Anfrage</a>
+  <div class="links">
+    <a href="#domains" data-i18n="nav.domains">Domains</a>
+    <a href="#live" data-i18n="nav.live">Live</a>
+    <a href="#spiele" data-i18n="nav.games">Spiele</a>
+    <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
+  </div>
+  <div class="tools">
+    <div class="seg" role="group" aria-label="Sprache / Language">
+      <button type="button" data-lang="de" aria-pressed="true">DE</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button type="button" class="btn icon-btn" id="snd" aria-pressed="false" aria-label="Sound an/aus" title="Sound">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path id="sndWave" d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" opacity=".3"/></svg>
+    </button>
+    <a class="btn primary" href="#kontakt" data-i18n="nav.cta">Anfrage</a>
+  </div>
 </nav>
 
 <main class="container" id="top">
   <section class="hero">
-    <div class="rv"><span class="pill"><span class="dot"></span>Offen für Anfragen</span></div>
+    <div class="rv"><span class="pill"><span class="dot"></span><span data-i18n="hero.pill">Offen für Anfragen</span></span></div>
     <h1 class="rv" aria-label="aksu.at, aksu.co.at, aksu.ch"><span class="word">aksu</span><span class="tld" id="tld"><span class="on">.at</span><span>.co.at</span><span>.ch</span></span></h1>
-    <div class="tagline rv">Drei Domains. <em>Ein Ansprechpartner.</em></div>
-    <p class="lead rv">Sie interessieren sich für eine der Domains oder haben ein Anliegen dazu? Schreiben Sie mir – ich melde mich zeitnah persönlich.</p>
+    <div class="tagline rv" data-i18n="hero.tag">Drei Domains. <em>Ein Ansprechpartner.</em></div>
+    <p class="lead rv" data-i18n="hero.lead">Sie interessieren sich für eine der Domains oder haben ein Anliegen dazu? Schreiben Sie mir – ich melde mich zeitnah persönlich.</p>
     <div class="cta rv">
-      <a class="btn primary" href="mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu-Domains">
+      <a class="btn primary" href="#kontakt">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
-        Anfrage senden
+        <span data-i18n="hero.send">Anfrage senden</span>
       </a>
-      <button class="btn copy" type="button" data-copy="mikail@aksu.at">
+      <button class="btn" type="button" data-copy="mikail@aksu.at">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
         <span>mikail@aksu.at</span>
       </button>
+      <button class="btn install" type="button" id="install">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+        <span data-i18n="hero.install">Als App installieren</span>
+      </button>
     </div>
 
-    <div class="term rv" aria-hidden="true">
-      <div class="term-head"><i></i><i></i><i></i><span>mikail@aksu — zsh</span></div>
-      <pre id="term"></pre>
+    <div class="term rv" id="term">
+      <div class="term-head"><i></i><i></i><i></i><span class="tt">gast@aksu — zsh</span><span class="th" data-i18n="term.hint">tippe „help“</span></div>
+      <div class="term-body" id="termBody">
+        <div id="out"></div>
+        <label class="line" id="line"><span class="p">❯</span><input id="cmd" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="send" aria-label="Terminal-Eingabe"></label>
+      </div>
     </div>
   </section>
 </main>
@@ -193,83 +283,132 @@
 <div class="container">
   <section class="sec" id="domains">
     <div class="sec-head rv">
-      <div><div class="kicker">// Portfolio</div><h2>Die Domains<br><span class="mut">im Überblick.</span></h2></div>
-      <p>Österreich und die Schweiz – kurz, einprägsam und unter einem Namen vereint.</p>
+      <div><div class="kicker">// Portfolio</div><h2 data-i18n="dom.h">Die Domains<br><span class="mut">im Überblick.</span></h2></div>
+      <p data-i18n="dom.p">Österreich und die Schweiz – kurz, einprägsam und unter einem Namen vereint.</p>
     </div>
     <div class="domains">
-      <a class="card dom here rv" href="mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu.at">
+      <a class="card dom here rv" href="#kontakt" data-domain="aksu.at">
         <div class="row">
-          <svg class="flag" viewBox="0 0 3 2" aria-label="Flagge Österreich"><rect width="3" height="2" fill="#ED2939"/><rect y=".667" width="3" height=".667" fill="#fff"/></svg>
-          <span class="here-tag">Sie sind hier</span>
+          <svg class="flag" viewBox="0 0 3 2" role="img" aria-label="AT"><rect width="3" height="2" fill="#ED2939"/><rect y=".667" width="3" height=".667" fill="#fff"/></svg>
+          <span class="here-tag" data-i18n="dom.here">Sie sind hier</span>
         </div>
         <h3>aksu<span>.at</span></h3>
-        <dl class="meta"><dt>Land</dt><dd>Österreich</dd><dt>Endung</dt><dd>.at</dd><dt>Status</dt><dd class="badge-on" style="justify-content:flex-end">aktiv</dd></dl>
-        <div class="go">Anfrage zu aksu.at <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <dl class="meta"><dt data-i18n="dom.country">Land</dt><dd data-i18n="c.at">Österreich</dd><dt data-i18n="dom.ext">Endung</dt><dd>.at</dd><dt>Status</dt><dd class="badge-on" style="justify-content:flex-end" data-i18n="dom.active">aktiv</dd></dl>
+        <div class="go"><span data-i18n="dom.ask">Anfrage zu</span>&nbsp;aksu.at <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-left:auto"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
       </a>
-      <a class="card dom rv" href="mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu.co.at" style="transition-delay:.08s">
+      <a class="card dom rv" href="#kontakt" data-domain="aksu.co.at" style="transition-delay:.08s">
         <div class="row">
-          <svg class="flag" viewBox="0 0 3 2" aria-label="Flagge Österreich"><rect width="3" height="2" fill="#ED2939"/><rect y=".667" width="3" height=".667" fill="#fff"/></svg>
-          <span class="badge-on">registriert</span>
+          <svg class="flag" viewBox="0 0 3 2" role="img" aria-label="AT"><rect width="3" height="2" fill="#ED2939"/><rect y=".667" width="3" height=".667" fill="#fff"/></svg>
+          <span class="badge-on" data-i18n="dom.reg">registriert</span>
         </div>
         <h3>aksu<span>.co.at</span></h3>
-        <dl class="meta"><dt>Land</dt><dd>Österreich</dd><dt>Endung</dt><dd>.co.at (kommerziell)</dd><dt>Status</dt><dd class="badge-on" style="justify-content:flex-end">registriert</dd></dl>
-        <div class="go">Anfrage zu aksu.co.at <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <dl class="meta"><dt data-i18n="dom.country">Land</dt><dd data-i18n="c.at">Österreich</dd><dt data-i18n="dom.ext">Endung</dt><dd data-i18n="dom.coat">.co.at (kommerziell)</dd><dt>Status</dt><dd class="badge-on" style="justify-content:flex-end" data-i18n="dom.reg">registriert</dd></dl>
+        <div class="go"><span data-i18n="dom.ask">Anfrage zu</span>&nbsp;aksu.co.at <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-left:auto"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
       </a>
-      <a class="card dom rv" href="mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu.ch" style="transition-delay:.16s">
+      <a class="card dom rv" href="#kontakt" data-domain="aksu.ch" style="transition-delay:.16s">
         <div class="row">
-          <svg class="flag" viewBox="0 0 32 32" style="width:30px" aria-label="Flagge Schweiz"><rect width="32" height="32" fill="#DA291C"/><path d="M13 6h6v7h7v6h-7v7h-6v-7H6v-6h7z" fill="#fff"/></svg>
-          <span class="badge-on">registriert</span>
+          <svg class="flag" viewBox="0 0 32 32" style="width:30px" role="img" aria-label="CH"><rect width="32" height="32" fill="#DA291C"/><path d="M13 6h6v7h7v6h-7v7h-6v-7H6v-6h7z" fill="#fff"/></svg>
+          <span class="badge-on" data-i18n="dom.reg">registriert</span>
         </div>
         <h3>aksu<span>.ch</span></h3>
-        <dl class="meta"><dt>Land</dt><dd>Schweiz</dd><dt>Endung</dt><dd>.ch</dd><dt>Status</dt><dd class="badge-on" style="justify-content:flex-end">registriert</dd></dl>
-        <div class="go">Anfrage zu aksu.ch <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <dl class="meta"><dt data-i18n="dom.country">Land</dt><dd data-i18n="c.ch">Schweiz</dd><dt data-i18n="dom.ext">Endung</dt><dd>.ch</dd><dt>Status</dt><dd class="badge-on" style="justify-content:flex-end" data-i18n="dom.reg">registriert</dd></dl>
+        <div class="go"><span data-i18n="dom.ask">Anfrage zu</span>&nbsp;aksu.ch <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-left:auto"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
       </a>
     </div>
     <div class="stats">
-      <div class="card stat-c rv"><div class="n" data-count="3">0</div><div class="l">Domains</div></div>
-      <div class="card stat-c rv" style="transition-delay:.08s"><div class="n" data-count="2">0</div><div class="l">Länder · AT &amp; CH</div></div>
-      <div class="card stat-c rv" style="transition-delay:.16s"><div class="n" data-count="1">0</div><div class="l">Ansprechpartner</div></div>
+      <div class="card stat-c rv"><div class="n" data-count="3">0</div><div class="l" data-i18n="st.1">Domains</div></div>
+      <div class="card stat-c rv" style="transition-delay:.08s"><div class="n" data-count="2">0</div><div class="l" data-i18n="st.2">Länder · AT &amp; CH</div></div>
+      <div class="card stat-c rv" style="transition-delay:.16s"><div class="n" data-count="1">0</div><div class="l" data-i18n="st.3">Ansprechpartner</div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="live">
+    <div class="sec-head rv">
+      <div><div class="kicker">// Live</div><h2 data-i18n="live.h">Wien &amp; Zürich<br><span class="mut">gerade jetzt.</span></h2></div>
+      <p data-i18n="live.p">Gleiche Zeitzone, zwei Länder – mit aktuellem Wetter direkt vor Ort.</p>
+    </div>
+    <div class="clocks">
+      <div class="card clock rv" data-tz="Europe/Vienna" data-lat="48.2082" data-lon="16.3738">
+        <svg class="dial" viewBox="0 0 150 150" aria-hidden="true"></svg>
+        <div>
+          <div class="city"><svg viewBox="0 0 3 2"><rect width="3" height="2" fill="#ED2939"/><rect y=".667" width="3" height=".667" fill="#fff"/></svg><span data-i18n="city.vie">Wien</span></div>
+          <div class="digital"></div><div class="date"></div>
+          <div class="wx"><span class="ic">·</span><div><b class="t">–</b><small class="d" data-i18n="wx.load">Wetter lädt …</small></div><span class="daynight"></span></div>
+        </div>
+      </div>
+      <div class="card clock rv" data-tz="Europe/Zurich" data-lat="47.3769" data-lon="8.5417" style="transition-delay:.08s">
+        <svg class="dial" viewBox="0 0 150 150" aria-hidden="true"></svg>
+        <div>
+          <div class="city"><svg viewBox="0 0 32 32" style="width:18px;height:18px"><rect width="32" height="32" fill="#DA291C"/><path d="M13 6h6v7h7v6h-7v7h-6v-7H6v-6h7z" fill="#fff"/></svg><span data-i18n="city.zrh">Zürich</span></div>
+          <div class="digital"></div><div class="date"></div>
+          <div class="wx"><span class="ic">·</span><div><b class="t">–</b><small class="d" data-i18n="wx.load">Wetter lädt …</small></div><span class="daynight"></span></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="sec" id="spiele">
     <div class="sec-head rv">
-      <div><div class="kicker">// Arcade</div><h2>Kleine Pause?<br><span class="mut">Eine Runde geht immer.</span></h2></div>
-      <p>Vier Klassiker, direkt im Browser – am Handy mit Wischen, am Rechner mit Tastatur.</p>
+      <div><div class="kicker">// Arcade</div><h2 data-i18n="g.h">Kleine Pause?<br><span class="mut">Eine Runde geht immer.</span></h2></div>
+      <p data-i18n="g.p">Sieben Klassiker, direkt im Browser – am Handy mit Wischen, am Rechner mit Tastatur. Rekorde werden gespeichert.</p>
     </div>
     <div class="games">
-      <a class="card game rv" href="minesweeper.html" style="--c:#fb923c">
+      <a class="card game rv" href="tetris.html" style="--c:#c084fc"><span class="new" data-i18n="g.new">NEU</span>
+        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="11" width="6" height="6" rx="1.5"/><rect x="9" y="11" width="6" height="6" rx="1.5"/><rect x="16" y="11" width="6" height="6" rx="1.5"/><rect x="9" y="4" width="6" height="6" rx="1.5"/></svg></div>
+        <div><b>Tetris</b><br><span data-i18n="g.tetris">Reihen füllen, bevor es eng wird.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
+      <a class="card game rv" href="breakout.html" style="--c:#fb7185;transition-delay:.05s"><span class="new" data-i18n="g.new">NEU</span>
+        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="5" height="3" rx="1"/><rect x="9.5" y="3" width="5" height="3" rx="1"/><rect x="16" y="3" width="5" height="3" rx="1"/><circle cx="13" cy="13" r="2"/><path d="M7 20h10"/></svg></div>
+        <div><b>Breakout</b><br><span data-i18n="g.breakout">Steine zerlegen, Ball halten.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
+      <a class="card game rv" href="memory.html" style="--c:#7c9cff;transition-delay:.1s"><span class="new" data-i18n="g.new">NEU</span>
+        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="8" height="12" rx="2"/><rect x="13" y="8" width="8" height="12" rx="2" fill="currentColor" fill-opacity=".25"/></svg></div>
+        <div><b>Memory</b><br><span data-i18n="g.memory">Paare finden – mit Alpen-Motiven.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
+      <a class="card game rv" href="minesweeper.html" style="--c:#fb923c;transition-delay:.15s">
         <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="6"/><path d="M12 3v3M12 20v1M4 13H3M21 13h-1M6.3 7.3 5.6 6.6M18.4 6.6l-.7.7"/><circle cx="10" cy="11" r="1.2" fill="currentColor" stroke="none"/></svg></div>
-        <div><b>Minesweeper</b><br><span>Finde alle Minen, ohne eine zu erwischen.</span></div>
-        <div class="play">▶ spielen</div>
-      </a>
-      <a class="card game rv" href="snake.html" style="--c:#34d399;transition-delay:.06s">
+        <div><b>Minesweeper</b><br><span data-i18n="g.mines">Finde alle Minen, ohne eine zu erwischen.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
+      <a class="card game rv" href="snake.html" style="--c:#34d399">
         <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18h9a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h9"/><circle cx="19" cy="6" r="1.5" fill="currentColor" stroke="none"/></svg></div>
-        <div><b>Snake</b><br><span>Fressen, wachsen und bloß nicht anstoßen.</span></div>
-        <div class="play">▶ spielen</div>
-      </a>
-      <a class="card game rv" href="2048.html" style="--c:#fbbf24;transition-delay:.12s">
+        <div><b>Snake</b><br><span data-i18n="g.snake">Fressen, wachsen und bloß nicht anstoßen.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
+      <a class="card game rv" href="2048.html" style="--c:#fbbf24;transition-delay:.05s">
         <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor"/></svg></div>
-        <div><b>2048</b><br><span>Gleiche Zahlen schieben, bis 2048 steht.</span></div>
-        <div class="play">▶ spielen</div>
-      </a>
-      <a class="card game rv" href="tictactoe.html" style="--c:#a78bfa;transition-delay:.18s">
+        <div><b>2048</b><br><span data-i18n="g.2048">Gleiche Zahlen schieben, bis 2048 steht.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
+      <a class="card game rv" href="tictactoe.html" style="--c:#a78bfa;transition-delay:.1s">
         <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></div>
-        <div><b>Tic-Tac-Toe</b><br><span>Gegen den Computer – leicht oder unschlagbar.</span></div>
-        <div class="play">▶ spielen</div>
-      </a>
+        <div><b>Tic-Tac-Toe</b><br><span data-i18n="g.ttt">Gegen den Computer – leicht oder unschlagbar.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
+      <button type="button" class="card game rv" id="toTerm" style="--c:#2dd4bf;transition-delay:.15s">
+        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 17 6-5-6-5M12 19h8"/></svg></div>
+        <div><b data-i18n="g.secret">Geheime Befehle</b><br><span data-i18n="g.secretP">Im Terminal verstecken sich ein paar Überraschungen.</span></div><div class="play" data-i18n="g.open">❯ Terminal öffnen</div></button>
     </div>
   </section>
 
   <section class="card contact rv" id="kontakt">
-    <div class="kicker">// Kontakt</div>
-    <h2>Lassen Sie uns<br>sprechen.</h2>
-    <a class="mail" href="mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu-Domains">mikail@aksu.at</a>
-    <p>Antwort in der Regel innerhalb von 24 Stunden.</p>
-    <div class="cta">
-      <a class="btn primary" href="mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu-Domains">E-Mail schreiben</a>
-      <button class="btn copy" type="button" data-copy="mikail@aksu.at"><span>Adresse kopieren</span></button>
+    <div>
+      <div class="kicker">// <span data-i18n="nav.contact">Kontakt</span></div>
+      <h2 data-i18n="c.h">Lassen Sie uns<br>sprechen.</h2>
+      <a class="mail" href="mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu-Domains">mikail@aksu.at</a>
+      <p class="note" data-i18n="c.note">Schreiben Sie direkt per E-Mail oder nutzen Sie das Formular. Antwort in der Regel innerhalb von 24 Stunden.</p>
+      <div class="cta">
+        <button class="btn" type="button" data-copy="mikail@aksu.at"><span data-i18n="c.copy">Adresse kopieren</span></button>
+      </div>
     </div>
+    <form id="form" novalidate>
+      <div class="f2">
+        <label class="fl"><span data-i18n="f.name">Name</span><input name="name" required autocomplete="name" data-i18n-ph="f.nameP" placeholder="Ihr Name"></label>
+        <label class="fl"><span data-i18n="f.mail">E-Mail</span><input name="email" type="email" required autocomplete="email" data-i18n-ph="f.mailP" placeholder="name@beispiel.at"></label>
+      </div>
+      <label class="fl"><span data-i18n="f.topic">Worum geht es?</span>
+        <select name="domain" id="topic">
+          <option value="aksu.at">aksu.at</option>
+          <option value="aksu.co.at">aksu.co.at</option>
+          <option value="aksu.ch">aksu.ch</option>
+          <option value="allgemein" data-i18n="f.general">Allgemeine Anfrage</option>
+        </select>
+      </label>
+      <label class="fl"><span data-i18n="f.msg">Nachricht</span><textarea name="message" required data-i18n-ph="f.msgP" placeholder="Ihre Nachricht …"></textarea></label>
+      <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn primary" type="submit" id="send"><span data-i18n="f.send">Nachricht senden</span></button>
+      <div class="fmsg" id="fmsg" role="status"></div>
+      <p class="small" data-i18n="f.privacy">Die Nachricht wird über den Dienst FormSubmit an mich weitergeleitet und nur zur Beantwortung verwendet.</p>
+    </form>
   </section>
 </div>
 
@@ -281,88 +420,286 @@
 
 <script>
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-document.getElementById('y').textContent=new Date().getFullYear();
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const $=id=>document.getElementById(id);
+$('y').textContent=new Date().getFullYear();
 
-/* Reveal beim Scrollen */
+/* ---------- Sprache ---------- */
+const I18N={
+ de:{'nav.domains':'Domains','nav.live':'Live','nav.games':'Spiele','nav.contact':'Kontakt','nav.cta':'Anfrage',
+  'hero.pill':'Offen für Anfragen','hero.tag':'Drei Domains. <em>Ein Ansprechpartner.</em>',
+  'hero.lead':'Sie interessieren sich für eine der Domains oder haben ein Anliegen dazu? Schreiben Sie mir – ich melde mich zeitnah persönlich.',
+  'hero.send':'Anfrage senden','hero.install':'Als App installieren','term.hint':'tippe „help“',
+  'dom.h':'Die Domains<br><span class="mut">im Überblick.</span>','dom.p':'Österreich und die Schweiz – kurz, einprägsam und unter einem Namen vereint.',
+  'dom.here':'Sie sind hier','dom.country':'Land','dom.ext':'Endung','dom.active':'aktiv','dom.reg':'registriert','dom.coat':'.co.at (kommerziell)','dom.ask':'Anfrage zu',
+  'c.at':'Österreich','c.ch':'Schweiz','st.1':'Domains','st.2':'Länder · AT &amp; CH','st.3':'Ansprechpartner',
+  'live.h':'Wien &amp; Zürich<br><span class="mut">gerade jetzt.</span>','live.p':'Gleiche Zeitzone, zwei Länder – mit aktuellem Wetter direkt vor Ort.',
+  'city.vie':'Wien','city.zrh':'Zürich','wx.load':'Wetter lädt …',
+  'g.h':'Kleine Pause?<br><span class="mut">Eine Runde geht immer.</span>','g.p':'Sieben Klassiker, direkt im Browser – am Handy mit Wischen, am Rechner mit Tastatur. Rekorde werden gespeichert.',
+  'g.new':'NEU','g.play':'▶ spielen','g.tetris':'Reihen füllen, bevor es eng wird.','g.breakout':'Steine zerlegen, Ball halten.','g.memory':'Paare finden – mit Alpen-Motiven.',
+  'g.mines':'Finde alle Minen, ohne eine zu erwischen.','g.snake':'Fressen, wachsen und bloß nicht anstoßen.','g.2048':'Gleiche Zahlen schieben, bis 2048 steht.',
+  'g.ttt':'Gegen den Computer – leicht oder unschlagbar.','g.secret':'Geheime Befehle','g.secretP':'Im Terminal verstecken sich ein paar Überraschungen.','g.open':'❯ Terminal öffnen',
+  'c.h':'Lassen Sie uns<br>sprechen.','c.note':'Schreiben Sie direkt per E-Mail oder nutzen Sie das Formular. Antwort in der Regel innerhalb von 24 Stunden.','c.copy':'Adresse kopieren',
+  'f.name':'Name','f.nameP':'Ihr Name','f.mail':'E-Mail','f.mailP':'name@beispiel.at','f.topic':'Worum geht es?','f.general':'Allgemeine Anfrage','f.msg':'Nachricht','f.msgP':'Ihre Nachricht …',
+  'f.send':'Nachricht senden','f.sending':'Wird gesendet …','f.ok':'✓ Danke! Ihre Nachricht ist unterwegs – ich melde mich bald.','f.err':'Das hat leider nicht geklappt. Bitte schreiben Sie direkt an mikail@aksu.at.',
+  'f.invalid':'Bitte Name, gültige E-Mail und Nachricht ausfüllen.','f.privacy':'Die Nachricht wird über den Dienst FormSubmit an mich weitergeleitet und nur zur Beantwortung verwendet.',
+  'toast.copy':'✓ E-Mail-Adresse kopiert','toast.konami':'🎉 Cheat aktiviert – Sie sind ein Profi!','toast.snd1':'🔊 Sound an','toast.snd0':'🔇 Sound aus'},
+ en:{'nav.domains':'Domains','nav.live':'Live','nav.games':'Games','nav.contact':'Contact','nav.cta':'Inquire',
+  'hero.pill':'Open for inquiries','hero.tag':'Three domains. <em>One contact.</em>',
+  'hero.lead':'Interested in one of these domains or have a question about them? Drop me a line – I’ll get back to you personally and promptly.',
+  'hero.send':'Send inquiry','hero.install':'Install as app','term.hint':'type “help”',
+  'dom.h':'The domains<br><span class="mut">at a glance.</span>','dom.p':'Austria and Switzerland – short, memorable and united under one name.',
+  'dom.here':'You are here','dom.country':'Country','dom.ext':'Extension','dom.active':'active','dom.reg':'registered','dom.coat':'.co.at (commercial)','dom.ask':'Inquire about',
+  'c.at':'Austria','c.ch':'Switzerland','st.1':'Domains','st.2':'Countries · AT &amp; CH','st.3':'Contact person',
+  'live.h':'Vienna &amp; Zurich<br><span class="mut">right now.</span>','live.p':'Same time zone, two countries – with live local weather.',
+  'city.vie':'Vienna','city.zrh':'Zurich','wx.load':'Loading weather …',
+  'g.h':'Need a break?<br><span class="mut">One more round.</span>','g.p':'Seven classics right in your browser – swipe on mobile, keyboard on desktop. High scores are saved.',
+  'g.new':'NEW','g.play':'▶ play','g.tetris':'Clear lines before it gets tight.','g.breakout':'Smash bricks, keep the ball.','g.memory':'Find the pairs – alpine edition.',
+  'g.mines':'Find all mines without hitting one.','g.snake':'Eat, grow and don’t crash.','g.2048':'Slide matching numbers up to 2048.',
+  'g.ttt':'Against the computer – easy or unbeatable.','g.secret':'Secret commands','g.secretP':'The terminal hides a few surprises.','g.open':'❯ Open terminal',
+  'c.h':'Let’s<br>talk.','c.note':'Email me directly or use the form. I usually reply within 24 hours.','c.copy':'Copy address',
+  'f.name':'Name','f.nameP':'Your name','f.mail':'Email','f.mailP':'name@example.com','f.topic':'What is it about?','f.general':'General inquiry','f.msg':'Message','f.msgP':'Your message …',
+  'f.send':'Send message','f.sending':'Sending …','f.ok':'✓ Thanks! Your message is on its way – I’ll be in touch soon.','f.err':'Sorry, that didn’t work. Please email mikail@aksu.at directly.',
+  'f.invalid':'Please fill in name, a valid email and a message.','f.privacy':'Your message is forwarded to me via FormSubmit and only used to reply.',
+  'toast.copy':'✓ Email address copied','toast.konami':'🎉 Cheat unlocked – you’re a pro!','toast.snd1':'🔊 Sound on','toast.snd0':'🔇 Sound off'}
+};
+let lang=store.get('lang')||((navigator.language||'de').toLowerCase().startsWith('de')?'de':'en');
+const t=k=>(I18N[lang]&&I18N[lang][k])||I18N.de[k]||k;
+function setLang(l){lang=l;store.set('lang',l);document.documentElement.lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>el.innerHTML=t(el.dataset.i18n));
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>el.placeholder=t(el.dataset.i18nPh));
+  document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));
+  renderClocks&&renderClocks(true);
+}
+document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{setLang(b.dataset.lang);blip(660)});
+
+/* ---------- Sound ---------- */
+let soundOn=store.get('sound')==='1',actx;
+function blip(f=520,d=.06,type='sine',v=.04){if(!soundOn)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+  const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,actx.currentTime);
+  g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+d);o.connect(g).connect(actx.destination);o.start();o.stop(actx.currentTime+d)}catch(e){}}
+function setSound(on){soundOn=on;store.set('sound',on?'1':'0');$('snd').setAttribute('aria-pressed',on);$('sndWave').setAttribute('opacity',on?'1':'.3')}
+setSound(soundOn);
+$('snd').onclick=()=>{setSound(!soundOn);say(t(soundOn?'toast.snd1':'toast.snd0'));blip(880,.12)};
+let lastHover=0;
+document.addEventListener('pointerover',e=>{const el=e.target.closest('.btn,.card,.links a,button');if(!el)return;const n=performance.now();if(n-lastHover<70)return;lastHover=n;blip(1400,.025,'triangle',.015)});
+document.addEventListener('click',e=>{if(e.target.closest('a,button'))blip(700,.05,'square',.02)});
+
+/* ---------- Reveal ---------- */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach((el,i)=>{if(el.closest('.hero'))el.style.transitionDelay=(i*.09)+'s';io.observe(el)});
 
-/* Wechselnde Endung */
-(()=>{const t=document.getElementById('tld'),items=[...t.children];let i=0;
-  const fit=()=>{t.style.width=items[i].getBoundingClientRect().width+'px'};
+/* ---------- Wechselnde Endung ---------- */
+(()=>{const tl=$('tld'),items=[...tl.children];let i=0;
+  const fit=()=>{tl.style.width=items[i].getBoundingClientRect().width+'px'};
   fit();addEventListener('resize',fit);document.fonts&&document.fonts.ready.then(fit);
   if(reduce)return;
-  setInterval(()=>{const prev=items[i];i=(i+1)%items.length;
-    prev.classList.remove('on');prev.classList.add('out');setTimeout(()=>prev.classList.remove('out'),700);
-    items[i].classList.add('on');fit();
-  },2800);
+  setInterval(()=>{const prev=items[i];i=(i+1)%items.length;prev.classList.remove('on');prev.classList.add('out');
+    setTimeout(()=>prev.classList.remove('out'),700);items[i].classList.add('on');fit()},2800);
 })();
 
-/* Terminal */
-(()=>{const el=document.getElementById('term');
-  const doms=[['aksu.at','Österreich'],['aksu.co.at','Österreich'],['aksu.ch','Schweiz']];
-  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
-  let html='',d=0;
-  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-  const render=(extra='')=>{el.innerHTML=html+extra+'<span class="caret"></span>'};
-  async function type(cmd){html+='<span class="p">❯</span> ';for(const ch of cmd){html+=esc(ch);render();await sleep(reduce?0:45+Math.random()*50)}html+='\n';render()}
-  async function out(lines){for(const l of lines){html+=l+'\n';render();await sleep(reduce?0:110)}}
-  async function loop(){
-    while(true){
-      const [dom,land]=doms[d%3];html='';
-      await type('whois '+dom);await sleep(250);
-      await out([`<span class="k">domain   </span> <span class="v">${dom}</span>`,
-                 `<span class="k">land     </span> ${land}`,
-                 `<span class="k">status   </span> <span class="g">● registriert</span>`,
-                 `<span class="k">kontakt  </span> <span class="v">mikail@aksu.at</span>`]);
-      await sleep(400);await type('echo "Anfragen willkommen 👋"');await out(['Anfragen willkommen 👋']);
-      await sleep(3200);d++;
-    }
-  }
-  loop();
+/* ---------- Partikel-Hintergrund ---------- */
+(()=>{const c=$('bg'),g=c.getContext('2d');let w,h,pts=[],mouse={x:-999,y:-999},sy=0;
+  function size(){w=innerWidth;h=innerHeight;c.width=w*devicePixelRatio;c.height=h*devicePixelRatio;g.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    const n=Math.round(Math.min(90,w*h/16000));pts=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.6+.4,z:Math.random()*.8+.2}))}
+  size();addEventListener('resize',size);
+  addEventListener('pointermove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});addEventListener('pointerleave',()=>{mouse.x=mouse.y=-999});
+  addEventListener('scroll',()=>{sy=scrollY},{passive:true});
+  function frame(){g.clearRect(0,0,w,h);
+    for(const p of pts){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x+=w;if(p.x>w)p.x-=w;if(p.y<0)p.y+=h;if(p.y>h)p.y-=h;
+      const py=((p.y-sy*p.z*.3)%h+h)%h;p.py=py;
+      const dx=mouse.x-p.x,dy=mouse.y-py,d=Math.hypot(dx,dy);if(d<160){p.x-=dx*.012*p.z;p.y-=dy*.012*p.z}
+      g.fillStyle=`rgba(200,210,255,${.25+p.z*.5})`;g.beginPath();g.arc(p.x,py,p.r*p.z+.3,0,7);g.fill()}
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const a=pts[i],b=pts[j],d=Math.hypot(a.x-b.x,a.py-b.py);
+      if(d<120){g.strokeStyle=`rgba(150,170,255,${(1-d/120)*.16})`;g.lineWidth=1;g.beginPath();g.moveTo(a.x,a.py);g.lineTo(b.x,b.py);g.stroke()}}
+    for(const p of pts){const d=Math.hypot(mouse.x-p.x,mouse.y-p.py);if(d<170){g.strokeStyle=`rgba(192,132,252,${(1-d/170)*.45})`;g.beginPath();g.moveTo(mouse.x,mouse.y);g.lineTo(p.x,p.py);g.stroke()}}
+    if(!reduce)requestAnimationFrame(frame)}
+  frame();
 })();
 
-/* Marquee */
-(()=>{const t=document.getElementById('track');const words=['aksu.at','aksu.co.at','aksu.ch','Domains','Österreich','Schweiz'];
-  let s='';for(let k=0;k<2;k++)words.forEach(w=>s+=`<span>${w}</span><b>✦</b>`);t.innerHTML=s})();
+/* ---------- Marquee ---------- */
+(()=>{const words=['aksu.at','aksu.co.at','aksu.ch','Domains','Wien','Zürich'];let s='';for(let k=0;k<2;k++)words.forEach(w=>s+=`<span>${w}</span><b>✦</b>`);$('track').innerHTML=s})();
 
-/* Spotlight + Neigung */
+/* ---------- Spotlight + Neigung ---------- */
 document.querySelectorAll('.card').forEach(c=>{
   c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
     c.style.setProperty('--mx',x+'px');c.style.setProperty('--my',y+'px');
-    if(!reduce&&e.pointerType==='mouse'&&!c.classList.contains('contact')){const rx=((y/r.height)-.5)*-6,ry=((x/r.width)-.5)*6;c.style.transform=`perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`}});
+    if(!reduce&&e.pointerType==='mouse'&&!c.classList.contains('contact')){c.style.transform=`perspective(900px) rotateX(${((y/r.height)-.5)*-6}deg) rotateY(${((x/r.width)-.5)*6}deg) translateY(-4px)`}});
   c.addEventListener('pointerleave',()=>{c.style.transform=''});
 });
 
-/* Zähler */
+/* ---------- Zähler ---------- */
 const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cio.unobserve(e.target);
-  const el=e.target,to=+el.dataset.count;let n=0;const step=()=>{n++;el.textContent=n;if(n<to)setTimeout(step,260)};setTimeout(step,300)}),{threshold:.5});
+  const el=e.target,to=+el.dataset.count;let n=0;const step=()=>{n++;el.textContent=n;blip(400+n*120,.05);if(n<to)setTimeout(step,260)};setTimeout(step,300)}),{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
 
-/* Kopieren + Toast */
-const toast=document.getElementById('toast');let tt;
-function say(m){toast.textContent=m;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('show'),2200)}
-document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{
-  try{await navigator.clipboard.writeText(b.dataset.copy);say('✓ E-Mail-Adresse kopiert');b.classList.add('ok');setTimeout(()=>b.classList.remove('ok'),1800);burst(b)}
-  catch(e){say(b.dataset.copy)}
-});
-
-/* Konfetti */
-const fx=document.getElementById('fx'),ctx=fx.getContext('2d');let parts=[],raf;
-function size(){fx.width=innerWidth*devicePixelRatio;fx.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0)}
-size();addEventListener('resize',size);
+/* ---------- Toast, Kopieren, Konfetti ---------- */
+let tt;function say(m){const el=$('toast');el.textContent=m;el.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),2200)}
+async function copyMail(el){try{await navigator.clipboard.writeText('mikail@aksu.at');say(t('toast.copy'));if(el){el.classList.add('ok');setTimeout(()=>el.classList.remove('ok'),1800);burst(el)}blip(990,.1);return true}catch(e){say('mikail@aksu.at');return false}}
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>copyMail(b));
+const fx=$('fx'),fctx=fx.getContext('2d');let parts=[],raf;
+function fsize(){fx.width=innerWidth*devicePixelRatio;fx.height=innerHeight*devicePixelRatio;fctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0)}
+fsize();addEventListener('resize',fsize);
 const cols=['#7c9cff','#c084fc','#2dd4bf','#fbbf24','#fb7185','#ffffff'];
-function spawn(x,y,n,spread){for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,v=2+Math.random()*spread;
+function spawn(x,y,n,spread){if(reduce)return;for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,v=2+Math.random()*spread;
   parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-spread*.6,r:3+Math.random()*4,c:cols[i%cols.length],rot:Math.random()*6,vr:(Math.random()-.5)*.3,life:1})}
   if(!raf)tick()}
-function tick(){ctx.clearRect(0,0,innerWidth,innerHeight);
+function tick(){fctx.clearRect(0,0,innerWidth,innerHeight);
   parts.forEach(p=>{p.vy+=.18;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.life-=.008;
-    ctx.save();ctx.globalAlpha=Math.max(p.life,0);ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;ctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);ctx.restore()});
-  parts=parts.filter(p=>p.life>0&&p.y<innerHeight+40);raf=parts.length?requestAnimationFrame(tick):null;if(!raf)ctx.clearRect(0,0,innerWidth,innerHeight)}
-function burst(el){if(reduce)return;const r=el.getBoundingClientRect();spawn(r.left+r.width/2,r.top+r.height/2,40,6)}
-const code=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let pos=0;
-addEventListener('keydown',e=>{pos=(e.key.toLowerCase?.()===code[pos].toLowerCase())?pos+1:(e.key===code[0]?1:0);
-  if(pos===code.length){pos=0;say('🎉 Cheat aktiviert – Sie sind ein Profi!');for(let i=0;i<6;i++)setTimeout(()=>spawn(Math.random()*innerWidth,innerHeight*.3,70,12),i*180)}});
+    fctx.save();fctx.globalAlpha=Math.max(p.life,0);fctx.translate(p.x,p.y);fctx.rotate(p.rot);fctx.fillStyle=p.c;fctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);fctx.restore()});
+  parts=parts.filter(p=>p.life>0&&p.y<innerHeight+40);raf=parts.length?requestAnimationFrame(tick):null;if(!raf)fctx.clearRect(0,0,innerWidth,innerHeight)}
+function burst(el){const r=el.getBoundingClientRect();spawn(r.left+r.width/2,r.top+r.height/2,40,6)}
+function party(){for(let i=0;i<6;i++)setTimeout(()=>{spawn(Math.random()*innerWidth,innerHeight*.3,70,12);blip(500+i*120,.12,'triangle',.05)},i*180)}
+const code=['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'];let kpos=0;
+addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;const k=(e.key||'').toLowerCase();
+  kpos=k===code[kpos]?kpos+1:(k===code[0]?1:0);if(kpos===code.length){kpos=0;say(t('toast.konami'));party()}});
+
+/* ---------- Domain-Karten -> Formular ---------- */
+document.querySelectorAll('[data-domain]').forEach(a=>a.addEventListener('click',()=>{$('topic').value=a.dataset.domain;setTimeout(()=>document.querySelector('#form input[name=name]').focus({preventScroll:true}),600)}));
+
+/* ---------- Uhren & Wetter ---------- */
+const WX={0:['☀️','🌙','Klar','Clear'],1:['🌤️','🌙','Überwiegend klar','Mostly clear'],2:['⛅','☁️','Teils bewölkt','Partly cloudy'],3:['☁️','☁️','Bedeckt','Overcast'],
+  45:['🌫️','🌫️','Nebel','Fog'],48:['🌫️','🌫️','Raureif-Nebel','Rime fog'],51:['🌦️','🌧️','Leichter Niesel','Light drizzle'],53:['🌦️','🌧️','Nieselregen','Drizzle'],55:['🌧️','🌧️','Starker Niesel','Heavy drizzle'],
+  56:['🌧️','🌧️','Gefrierender Niesel','Freezing drizzle'],57:['🌧️','🌧️','Gefrierender Niesel','Freezing drizzle'],61:['🌦️','🌧️','Leichter Regen','Light rain'],63:['🌧️','🌧️','Regen','Rain'],65:['🌧️','🌧️','Starker Regen','Heavy rain'],
+  66:['🌧️','🌧️','Gefrierender Regen','Freezing rain'],67:['🌧️','🌧️','Gefrierender Regen','Freezing rain'],71:['🌨️','🌨️','Leichter Schnee','Light snow'],73:['🌨️','🌨️','Schnee','Snow'],75:['❄️','❄️','Starker Schnee','Heavy snow'],
+  77:['🌨️','🌨️','Schneegriesel','Snow grains'],80:['🌦️','🌧️','Regenschauer','Rain showers'],81:['🌧️','🌧️','Regenschauer','Rain showers'],82:['⛈️','⛈️','Heftige Schauer','Violent showers'],
+  85:['🌨️','🌨️','Schneeschauer','Snow showers'],86:['🌨️','🌨️','Schneeschauer','Snow showers'],95:['⛈️','⛈️','Gewitter','Thunderstorm'],96:['⛈️','⛈️','Gewitter mit Hagel','Thunderstorm, hail'],99:['⛈️','⛈️','Gewitter mit Hagel','Thunderstorm, hail']};
+const clocks=[...document.querySelectorAll('.clock')];const wxData={};
+clocks.forEach(c=>{const s=c.querySelector('.dial');let html='<circle class="face" cx="75" cy="75" r="72"/>';
+  for(let i=0;i<60;i++){const a=i*6*Math.PI/180,big=i%5===0,r1=big?60:64;html+=`<line class="tick${big?' big':''}" x1="${75+Math.sin(a)*r1}" y1="${75-Math.cos(a)*r1}" x2="${75+Math.sin(a)*68}" y2="${75-Math.cos(a)*68}"/>`}
+  html+='<line class="hand h" x1="75" y1="75" x2="75" y2="40"/><line class="hand m" x1="75" y1="75" x2="75" y2="22"/><line class="hand s" x1="75" y1="88" x2="75" y2="16"/><circle cx="75" cy="75" r="4" fill="#fb7185"/>';
+  s.innerHTML=html});
+function parts_(tz){const f=new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
+  const o={};f.forEach(p=>o[p.type]=p.value);return{h:+o.hour,m:+o.minute,s:+o.second}}
+function renderClocks(full){const now=new Date();clocks.forEach(c=>{const tz=c.dataset.tz,p=parts_(tz),ms=now.getMilliseconds();
+  const sec=p.s+(reduce?0:ms/1000),min=p.m+sec/60,hr=(p.h%12)+min/60;
+  c.querySelector('.h').style.transform=`rotate(${hr*30}deg)`;c.querySelector('.m').style.transform=`rotate(${min*6}deg)`;c.querySelector('.s').style.transform=`rotate(${sec*6}deg)`;
+  const pad=n=>String(n).padStart(2,'0');c.querySelector('.digital').innerHTML=`${pad(p.h)}:${pad(p.m)}<span class="sec">:${pad(p.s)}</span>`;
+  if(full||p.s===0)c.querySelector('.date').textContent=now.toLocaleDateString(lang==='de'?'de-AT':'en-GB',{timeZone:tz,weekday:'long',day:'numeric',month:'long'});
+  if(full)paintWx(c)})}
+function paintWx(c){const d=wxData[c.dataset.tz];if(!d)return;const m=WX[d.code]||['🌡️','🌡️','—','—'];
+  c.querySelector('.ic').textContent=d.day?m[0]:m[1];c.querySelector('.t').textContent=Math.round(d.temp)+'°C';
+  c.querySelector('.d').textContent=(lang==='de'?m[2]:m[3])+' · '+Math.round(d.wind)+' km/h';
+  c.querySelector('.daynight').textContent=d.day?(lang==='de'?'Tag':'day'):(lang==='de'?'Nacht':'night')}
+async function loadWx(){for(const c of clocks){try{
+  const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.dataset.lat}&longitude=${c.dataset.lon}&current=temperature_2m,weather_code,is_day,wind_speed_10m&timezone=auto`);
+  const j=await r.json();wxData[c.dataset.tz]={temp:j.current.temperature_2m,code:j.current.weather_code,day:j.current.is_day===1,wind:j.current.wind_speed_10m};paintWx(c)}
+  catch(e){c.querySelector('.d').textContent=lang==='de'?'Wetter gerade nicht verfügbar':'Weather unavailable'}}}
+(function clockLoop(){renderClocks(false);reduce?setTimeout(clockLoop,1000):requestAnimationFrame(clockLoop)})();
+loadWx();setInterval(loadWx,15*60*1000);
+
+/* ---------- Kontaktformular ---------- */
+$('form').addEventListener('submit',async e=>{e.preventDefault();const f=e.target,m=$('fmsg');m.className='fmsg';
+  const data=Object.fromEntries(new FormData(f));
+  if(data._honey)return;
+  if(!data.name.trim()||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)||!data.message.trim()){m.textContent=t('f.invalid');m.classList.add('err');return}
+  const btn=$('send');btn.disabled=true;btn.querySelector('span').textContent=t('f.sending');
+  try{const r=await fetch('https://formsubmit.co/ajax/mikail@aksu.at',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({name:data.name,email:data.email,Domain:data.domain,message:data.message,_subject:`Anfrage zu ${data.domain} über aksu.at`,_template:'table',_replyto:data.email})});
+    if(!r.ok)throw new Error(r.status);
+    m.textContent=t('f.ok');m.classList.add('ok');f.reset();burst(btn);blip(880,.15,'triangle',.05)}
+  catch(err){m.innerHTML=t('f.err');m.classList.add('err')}
+  finally{btn.disabled=false;btn.querySelector('span').textContent=t('f.send')}});
+
+/* ---------- App installieren ---------- */
+let deferred;addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;$('install').classList.add('show')});
+$('install').onclick=async()=>{if(!deferred)return;deferred.prompt();await deferred.userChoice;deferred=null;$('install').classList.remove('show')};
+
+/* ---------- Matrix ---------- */
+function matrix(){if(reduce)return;const c=$('matrix'),g=c.getContext('2d');c.style.display='block';c.width=innerWidth;c.height=innerHeight;
+  const fs=16,cols=Math.floor(c.width/fs),y=Array(cols).fill(0).map(()=>Math.random()*-50),chars='aksu.at.co.ch01アカサタナハマヤラワ';let run=true,t0=Date.now();
+  function stop(){run=false;c.style.display='none';removeEventListener('keydown',esc)}function esc(e){if(e.key==='Escape')stop()}
+  c.onclick=stop;addEventListener('keydown',esc);
+  (function f(){if(!run)return;g.fillStyle='rgba(0,0,0,.08)';g.fillRect(0,0,c.width,c.height);g.font=fs+'px JetBrains Mono, monospace';
+    for(let i=0;i<cols;i++){const ch=chars[Math.floor(Math.random()*chars.length)];g.fillStyle=Math.random()<.04?'#fff':(i%3?'#2dd4bf':'#7c9cff');g.fillText(ch,i*fs,y[i]*fs);
+      if(y[i]*fs>c.height&&Math.random()>.975)y[i]=0;y[i]++}
+    if(Date.now()-t0>9000)return stop();requestAnimationFrame(f)})()}
+
+/* ---------- Terminal ---------- */
+(()=>{const out=$('out'),inp=$('cmd'),body=$('termBody');let hist=[],hp=0,busy=false,intro=true;
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const print=(html='')=>{const d=document.createElement('div');d.innerHTML=html||'&nbsp;';out.appendChild(d);body.scrollTop=body.scrollHeight;return d};
+  const L=(de,en)=>lang==='de'?de:en;
+  const DOMS={'aksu.at':['Österreich','Austria','aktiv · diese Seite','active · this site'],'aksu.co.at':['Österreich','Austria','registriert','registered'],'aksu.ch':['Schweiz','Switzerland','registriert','registered']};
+  const GAMES=['tetris','breakout','memory','minesweeper','snake','2048','tictactoe'];
+  function whois(d){d=(d||'').toLowerCase().replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/$/,'');
+    if(!d){return print(L('<span class="k">Verwendung:</span> whois aksu.at | aksu.co.at | aksu.ch','<span class="k">usage:</span> whois aksu.at | aksu.co.at | aksu.ch'))}
+    const x=DOMS[d];if(!x)return print(`<span class="e">${esc(d)}</span> – ${L('gehört nicht zum Portfolio. Probier: domains','is not in the portfolio. Try: domains')}`);
+    print(`<span class="k">domain   </span> <span class="v">${d}</span>`);print(`<span class="k">${L('land     ','country  ')}</span> ${L(x[0],x[1])}`);
+    print(`<span class="k">status   </span> <span class="g">● ${L(x[2],x[3])}</span>`);print(`<span class="k">${L('kontakt  ','contact  ')}</span> <span class="v">mikail@aksu.at</span>`)}
+  const C={
+    help(){print(L('<span class="a">Verfügbare Befehle</span>','<span class="a">Available commands</span>'));
+      [['whois &lt;domain&gt;',L('Infos zu einer Domain','info about a domain')],['domains',L('alle Domains auflisten','list all domains')],['contact',L('E-Mail schreiben','write an email')],
+       ['copy',L('E-Mail-Adresse kopieren','copy email address')],['games',L('Spiele anzeigen','list games')],['play &lt;spiel&gt;',L('Spiel starten','start a game')],
+       ['time · weather',L('Wien &amp; Zürich live','Vienna &amp; Zurich live')],['lang de|en',L('Sprache wechseln','switch language')],['sound on|off',L('Sound umschalten','toggle sound')],
+       ['clear',L('Bildschirm leeren','clear screen')]].forEach(([a,b])=>print(`  <span class="p">${a.padEnd(18,' ')}</span><span class="k">${b}</span>`));
+      print(L('<span class="k">… und ein paar versteckte. Neugierig? 😉</span>','<span class="k">… plus a few hidden ones. Curious? 😉</span>'))},
+    whois:a=>whois(a[0]),
+    domains(){Object.keys(DOMS).forEach(d=>print(`  <span class="g">●</span> <span class="v">${d.padEnd(12,' ')}</span><span class="k">${L(DOMS[d][0],DOMS[d][1])}</span>`))},
+    ls(){print('<span class="v">about.txt  domains/  games/  kontakt.vcf</span>')},
+    cat(a){const f=(a[0]||'').toLowerCase();if(f==='about.txt')print(L('aksu – drei Domains, ein Name. Betrieben von Mikail Aksu.\nAnfragen jederzeit willkommen.','aksu – three domains, one name. Run by Mikail Aksu.\nInquiries always welcome.'));
+      else if(f==='kontakt.vcf')print('BEGIN:VCARD\nFN:Mikail Aksu\nEMAIL:mikail@aksu.at\nURL:https://aksu.at\nEND:VCARD');else print(`cat: ${esc(f||'?')}: ${L('Datei nicht gefunden','no such file')}`)},
+    contact(){print(L('Öffne E-Mail-Programm …','Opening mail client …'));location.href='mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu-Domains'},
+    mail(){C.contact()},
+    async copy(){const ok=await copyMail();print(ok?`<span class="g">✓</span> ${L('kopiert','copied')}: mikail@aksu.at`:'mikail@aksu.at')},
+    games(){GAMES.forEach(g=>print(`  <span class="p">▶</span> <a href="${g}.html">${g}</a>`));print(L('<span class="k">Starten mit: play tetris</span>','<span class="k">Start with: play tetris</span>'))},
+    play(a){const g=(a[0]||'').toLowerCase().replace('tic-tac-toe','tictactoe');if(!GAMES.includes(g))return print(L('Welches Spiel? ','Which game? ')+GAMES.join(', '));
+      print(`${L('Starte','Launching')} <span class="a">${g}</span> …`);setTimeout(()=>location.href=g+'.html',500)},
+    time(){clocks.forEach(c=>{const p=parts_(c.dataset.tz),pad=n=>String(n).padStart(2,'0');print(`  <span class="v">${(c.querySelector('.city span').textContent).padEnd(8,' ')}</span> ${pad(p.h)}:${pad(p.m)}:${pad(p.s)}`)})},
+    date(){print(new Date().toLocaleString(lang==='de'?'de-AT':'en-GB',{dateStyle:'full',timeStyle:'medium',timeZone:'Europe/Vienna'}))},
+    weather(){clocks.forEach(c=>{const d=wxData[c.dataset.tz],n=c.querySelector('.city span').textContent;if(!d)return print(`  ${n}: ${L('noch keine Daten','no data yet')}`);
+      const m=WX[d.code]||['','','–','–'];print(`  <span class="v">${n.padEnd(8,' ')}</span> ${d.day?m[0]:m[1]} ${Math.round(d.temp)}°C · ${L(m[2],m[3])} · ${Math.round(d.wind)} km/h`)})},
+    lang(a){const l=(a[0]||'').toLowerCase();if(l!=='de'&&l!=='en')return print(L('Verwendung: lang de | lang en','usage: lang de | lang en'));setLang(l);print(`<span class="g">✓</span> ${L('Sprache: Deutsch','language: English')}`)},
+    sound(a){const on=(a[0]||'').toLowerCase()==='on'?true:(a[0]||'').toLowerCase()==='off'?false:!soundOn;setSound(on);print(on?'🔊 sound on':'🔇 sound off')},
+    clear(){out.innerHTML=''},cls(){out.innerHTML=''},
+    whoami(){print(L('gast@aksu.at – neugierig, wie es scheint. 👀','guest@aksu.at – curious, it seems. 👀'))},
+    echo(a){print(esc(a.join(' ')))},
+    sudo(){print(`<span class="e">${L('Zugriff verweigert.','Permission denied.')}</span> ${L('Netter Versuch 😄','Nice try 😄')}`);blip(160,.25,'sawtooth',.04)},
+    rm(){print(L('Schön wär’s. 🙂 Hier wird nichts gelöscht.','Nice try. 🙂 Nothing gets deleted here.'))},
+    exit(){print(L('Es gibt kein Entkommen … probier lieber <span class="p">games</span>.','There is no escape … try <span class="p">games</span> instead.'))},
+    matrix(){print(L('Wach auf, Neo … (Klick oder Esc beendet)','Wake up, Neo … (click or Esc to exit)'));setTimeout(matrix,400)},
+    party(){print('🎉🎉🎉');party()},confetti(){C.party()},
+    coffee(){print('    ( (\n     ) )\n  ........\n  |      |]\n  \\      /\n   `----´');print(L('Frisch gebrüht. ☕','Freshly brewed. ☕'))},
+    async hack(){busy=true;const steps=L(['Verbinde mit Mainframe','Umgehe Firewall','Entschlüssle Passwörter','Lade Kaffeevorräte'],['Connecting to mainframe','Bypassing firewall','Decrypting passwords','Loading coffee supplies']);
+      for(const s of steps){const d=print(`<span class="k">${s}</span> [${' '.repeat(20)}]`);for(let i=1;i<=20;i++){await sleep(25);d.innerHTML=`<span class="k">${s}</span> [<span class="g">${'#'.repeat(i)}</span>${' '.repeat(20-i)}] ${i*5}%`;if(i%4===0)blip(300+i*30,.02,'square',.015)}}
+      print(`<span class="g">${L('ZUGRIFF GEWÄHRT','ACCESS GRANTED')}</span> … ${L('auf ein Glas Wasser. 💧','to a glass of water. 💧')}`);busy=false},
+    history(){hist.forEach((h,i)=>print(`  ${String(i+1).padStart(3,' ')}  ${esc(h)}`))},
+    secret(){print(L('Tipp: Auf der Seite (nicht hier) ↑ ↑ ↓ ↓ ← → ← → B A tippen. 🤫','Hint: on the page (not here) type ↑ ↑ ↓ ↓ ← → ← → B A. 🤫'))},
+    hello(){print(L('Servus! 👋','Hi there! 👋'))},hallo(){C.hello()},servus(){print('Servus! Grüezi! 👋')},grüezi(){C.servus()},
+    neofetch(){print(`<span class="a">     ▄▀▀▄     </span> <span class="v">gast@aksu</span>
+<span class="a">    █▄▄▄█     </span> <span class="k">os</span>      aksu.at OS
+<span class="a">    █   █     </span> <span class="k">domains</span> 3 (.at .co.at .ch)
+<span class="a">              </span> <span class="k">games</span>   7
+<span class="a">              </span> <span class="k">uptime</span>  ${Math.floor(performance.now()/1000)}s
+<span class="a">              </span> <span class="k">shell</span>   aksu-zsh`)}
+  };
+  const NAMES=Object.keys(C);
+  async function run(line){const raw=line.trim();print(`<span class="p">❯</span> <span class="v">${esc(raw)}</span>`);if(!raw)return;
+    hist.push(raw);hp=hist.length;const [cmd,...args]=raw.split(/\s+/);const fn=C[cmd.toLowerCase()];
+    if(fn){await fn(args)}else{print(`<span class="e">${L('Befehl nicht gefunden','command not found')}:</span> ${esc(cmd)} – ${L('tippe','type')} <span class="p">help</span>`);blip(180,.12,'square',.03)}
+    print('')}
+  inp.addEventListener('keydown',async e=>{
+    if(e.key==='Enter'){e.preventDefault();if(busy)return;intro=false;const v=inp.value;inp.value='';blip(620,.04);await run(v)}
+    else if(e.key==='ArrowUp'){e.preventDefault();if(hp>0){hp--;inp.value=hist[hp]}}
+    else if(e.key==='ArrowDown'){e.preventDefault();if(hp<hist.length-1){hp++;inp.value=hist[hp]}else{hp=hist.length;inp.value=''}}
+    else if(e.key==='Tab'){e.preventDefault();const v=inp.value.toLowerCase(),parts=v.split(' ');
+      if(parts.length===1){const m=NAMES.filter(n=>n.startsWith(v));if(m.length===1)inp.value=m[0]+' ';else if(m.length)print(m.join('  '))}
+      else{const pool=parts[0]==='whois'?Object.keys(DOMS):parts[0]==='play'?GAMES:parts[0]==='lang'?['de','en']:[];const m=pool.filter(n=>n.startsWith(parts[1]));if(m.length===1)inp.value=parts[0]+' '+m[0]}}
+    else if(e.key==='l'&&e.ctrlKey){e.preventDefault();out.innerHTML=''}
+    else if(e.key.length===1)blip(1800+Math.random()*400,.015,'square',.008)});
+  $('term').addEventListener('click',e=>{if(!e.target.closest('a'))inp.focus({preventScroll:true})});
+  $('toTerm').onclick=()=>{$('term').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});setTimeout(()=>{inp.focus({preventScroll:true});if(!inp.value)inp.value='help'},600)};
+  // Intro
+  (async()=>{inp.disabled=true;$('line').style.opacity='.4';
+    const type=async s=>{const d=print('<span class="p">❯</span> ');for(const ch of s){if(!intro)break;d.innerHTML+=esc(ch);await sleep(reduce?0:45+Math.random()*45)}return d};
+    await sleep(900);await type('whois aksu.at');if(intro){await sleep(200);whois('aksu.at')}
+    print('');print(L('<span class="k">Willkommen! Tippe</span> <span class="p">help</span> <span class="k">für alle Befehle.</span>','<span class="k">Welcome! Type</span> <span class="p">help</span> <span class="k">for all commands.</span>'));print('');
+    inp.disabled=false;$('line').style.opacity='1'})();
+})();
+
+setLang(lang);
 </script>
+<script src="app.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07090f">
+<title>Memory · aksu.at</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='6' y='10' width='24' height='44' rx='5' fill='%237c9cff'/><rect x='34' y='10' width='24' height='44' rx='5' fill='%23c084fc'/></svg>">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=4">
+<style>
+  .mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:440px;margin:0 auto;perspective:900px}
+  .card{aspect-ratio:3/4;position:relative;cursor:pointer;border:0;background:none;padding:0;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.3,.7,.2,1)}
+  .card.up,.card.done{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:grid;place-items:center}
+  .back-f{background:linear-gradient(145deg,rgba(124,156,255,.35),rgba(192,132,252,.3));border:1px solid var(--line);
+    background-image:radial-gradient(circle at 30% 30%,rgba(255,255,255,.18),transparent 40%),linear-gradient(145deg,rgba(124,156,255,.35),rgba(192,132,252,.3))}
+  .back-f::after{content:"a";font-family:"Space Grotesk";font-weight:700;font-size:26px;color:rgba(255,255,255,.35)}
+  .front{transform:rotateY(180deg);background:var(--card-solid);border:1px solid var(--line);font-size:clamp(28px,8vw,40px)}
+  .card.done .front{border-color:rgba(52,211,153,.5);box-shadow:0 0 24px rgba(52,211,153,.2)}
+  .card:hover:not(.up):not(.done){transform:translateY(-3px)}
+  .card:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}
+  .levels{display:flex;gap:6px}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div class="grid-bg" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
+<div class="wrap">
+  <div class="top"><a class="back" href="./">← aksu</a><h1 style="font-size:26px">Memory</h1></div>
+  <div class="panel">
+    <div class="bar">
+      <div class="levels" role="group" aria-label="Größe">
+        <button data-n="8" aria-pressed="true">4×4</button>
+        <button data-n="10">4×5</button>
+        <button data-n="12">4×6</button>
+      </div>
+      <button class="primary" id="new">Neu mischen</button>
+    </div>
+    <div class="bar">
+      <span class="stat">Züge: <b id="moves">0</b></span>
+      <span class="stat">Zeit: <b id="time">0</b>s</span>
+      <span class="stat">Rekord: <b id="best">–</b></span>
+    </div>
+    <div class="mem" id="m"></div>
+    <div class="msg" id="msg"></div>
+    <p class="hint">Finde alle Paare mit möglichst wenigen Zügen.</p>
+  </div>
+</div>
+<script>
+const ICONS=['🏔️','🧀','🎿','☕','🚠','🎻','🍫','🥨','⛷️','🏰','🌲','🦌'];
+const M=document.getElementById('m'),$=id=>document.getElementById(id);
+let n=8,open=[],moves,found,t0,timer,lock=false;
+function bestKey(){return 'memory-best-'+n}
+function showBest(){let b=null;try{b=localStorage.getItem(bestKey())}catch(e){}$('best').textContent=b?b+' Züge':'–'}
+function init(){
+  clearInterval(timer);t0=null;moves=0;found=0;open=[];lock=false;$('moves').textContent=0;$('time').textContent=0;$('msg').textContent='';showBest();
+  const deck=ICONS.slice().sort(()=>Math.random()-.5).slice(0,n);const cards=[...deck,...deck].sort(()=>Math.random()-.5);
+  M.innerHTML='';
+  cards.forEach((ic,i)=>{const b=document.createElement('button');b.className='card';b.dataset.v=ic;b.setAttribute('aria-label','Karte '+(i+1));
+    b.innerHTML=`<span class="face back-f"></span><span class="face front">${ic}</span>`;b.onclick=()=>flip(b);M.appendChild(b)});
+}
+function flip(b){
+  if(lock||b.classList.contains('up')||b.classList.contains('done'))return;
+  if(!t0){t0=Date.now();timer=setInterval(()=>$('time').textContent=Math.floor((Date.now()-t0)/1000),250)}
+  b.classList.add('up');open.push(b);
+  if(open.length===2){moves++;$('moves').textContent=moves;const[a,c]=open;
+    if(a.dataset.v===c.dataset.v){setTimeout(()=>{a.classList.add('done');c.classList.add('done');a.classList.remove('up');c.classList.remove('up')},350);open=[];found++;
+      if(found===n)win()}
+    else{lock=true;setTimeout(()=>{a.classList.remove('up');c.classList.remove('up');open=[];lock=false},850)}}
+}
+function win(){clearInterval(timer);
+  let b=null;try{b=+localStorage.getItem(bestKey())||null}catch(e){}
+  if(!b||moves<b){try{localStorage.setItem(bestKey(),moves)}catch(e){}$('msg').textContent=`Neuer Rekord: ${moves} Züge in ${$('time').textContent}s!`}
+  else $('msg').textContent=`Geschafft: ${moves} Züge in ${$('time').textContent}s`;
+  $('msg').style.color='var(--ok)';showBest()}
+document.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-n]').forEach(x=>x.setAttribute('aria-pressed','false'));
+  b.setAttribute('aria-pressed','true');n=+b.dataset.n;init()});
+$('new').onclick=init;init();
+</script>
+<script src="app.js" defer></script>
+</body>
+</html>

@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css?v=4">
 <style>
   .board{display:grid;gap:2px;user-select:none;-webkit-user-select:none;touch-action:manipulation;margin:0 auto}
   .c{aspect-ratio:1;border:0;border-radius:4px;padding:0;background:linear-gradient(145deg,rgba(124,156,255,.55),rgba(192,132,252,.45));opacity:.9;
@@ -132,5 +133,6 @@ document.getElementById('flagMode').onclick=e=>{flagMode=!flagMode;e.currentTarg
 document.getElementById('new').onclick=init;
 init();
 </script>
+<script src="app.js" defer></script>
 </body>
 </html>

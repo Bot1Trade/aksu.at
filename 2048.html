@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css?v=4">
 <style>
   .g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px;background:var(--soft);border-radius:14px;
      max-width:400px;margin:0 auto;touch-action:none;user-select:none}
@@ -91,5 +92,6 @@ G.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.c
 document.getElementById('new').onclick=init;
 init();
 </script>
+<script src="app.js" defer></script>
 </body>
 </html>

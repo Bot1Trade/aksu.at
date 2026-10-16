@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07090f">
+<title>Breakout · aksu.at</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='6' y='8' width='16' height='8' rx='2' fill='%23fb7185'/><rect x='24' y='8' width='16' height='8' rx='2' fill='%23fbbf24'/><rect x='42' y='8' width='16' height='8' rx='2' fill='%232dd4bf'/><circle cx='34' cy='38' r='5' fill='white'/><rect x='18' y='52' width='28' height='6' rx='3' fill='%237c9cff'/></svg>">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=4">
+<style>
+  .stage{position:relative;max-width:480px;margin:0 auto}
+  canvas{display:block;width:100%;aspect-ratio:3/4;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid var(--line);touch-action:none;cursor:none}
+  .ov{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:rgba(7,9,15,.65);border-radius:12px;backdrop-filter:blur(4px)}
+  .ov[hidden]{display:none}.ov h2{font-size:28px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div class="grid-bg" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
+<div class="wrap">
+  <div class="top"><a class="back" href="./">← aksu</a><h1 style="font-size:26px">Breakout</h1></div>
+  <div class="panel">
+    <div class="bar">
+      <span class="stat">Punkte: <b id="score">0</b></span>
+      <span class="stat">Level: <b id="level">1</b></span>
+      <span class="stat">Leben: <b id="lives">❤❤❤</b></span>
+      <span class="stat">Rekord: <b id="best">0</b></span>
+    </div>
+    <div class="stage">
+      <canvas id="c" width="480" height="640" aria-label="Spielfeld"></canvas>
+      <div class="ov" id="ov"><div><h2 id="ovT">Breakout</h2><p class="hint" id="ovP" style="margin-bottom:14px">Alle Steine abräumen. Ball nicht fallen lassen.</p><button class="primary" id="go">Start</button></div></div>
+    </div>
+    <p class="hint">Maus oder Finger bewegt den Schläger · ← → geht auch · Leertaste/Klick startet den Ball.</p>
+  </div>
+</div>
+<script>
+const cv=document.getElementById('c'),ctx=cv.getContext('2d'),Wd=cv.width,Ht=cv.height,$=id=>document.getElementById(id);
+const ROWC=['#fb7185','#fb923c','#fbbf24','#34d399','#2dd4bf','#7c9cff','#c084fc'];
+let pad,ball,bricks,score,lives,level,running=false,stuck=true,keys={},best=0,parts=[],last;
+try{best=+localStorage.getItem('breakout-best')||0}catch(e){}$('best').textContent=best;
+function buildBricks(){bricks=[];const cols=8,rows=Math.min(4+level,7),gap=6,bw=(Wd-40-gap*(cols-1))/cols,bh=20;
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){if(level>2&&(r+c+level)%7===0)continue;
+    bricks.push({x:20+c*(bw+gap),y:70+r*(bh+gap),w:bw,h:bh,c:ROWC[r%ROWC.length],hp:level>3&&r<2?2:1})}}
+function resetBall(){stuck=true;ball={x:pad.x,y:pad.y-12,r:7,vx:0,vy:0}}
+function speed(){return 5+level*.6}
+function launch(){if(!stuck)return;stuck=false;const a=-Math.PI/2+(Math.random()-.5)*.8;ball.vx=Math.cos(a)*speed();ball.vy=Math.sin(a)*speed()}
+function hud(){$('score').textContent=score;$('level').textContent=level;$('lives').textContent='❤'.repeat(Math.max(lives,0))||'–';
+  if(score>best){best=score;$('best').textContent=best;try{localStorage.setItem('breakout-best',best)}catch(e){}}}
+function start(){score=0;lives=3;level=1;pad={x:Wd/2,y:Ht-36,w:96,h:12};buildBricks();resetBall();hud();running=true;$('ov').hidden=true;last=performance.now();requestAnimationFrame(loop)}
+function burst(x,y,c){for(let i=0;i<14;i++){const a=Math.random()*Math.PI*2,v=1+Math.random()*3;parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,c})}}
+function step(){
+  if(keys.ArrowLeft)pad.x-=8;if(keys.ArrowRight)pad.x+=8;pad.x=Math.max(pad.w/2,Math.min(Wd-pad.w/2,pad.x));
+  if(stuck){ball.x=pad.x;ball.y=pad.y-12;return}
+  ball.x+=ball.vx;ball.y+=ball.vy;
+  if(ball.x<ball.r||ball.x>Wd-ball.r){ball.vx*=-1;ball.x=Math.max(ball.r,Math.min(Wd-ball.r,ball.x))}
+  if(ball.y<ball.r){ball.vy*=-1;ball.y=ball.r}
+  if(ball.vy>0&&ball.y+ball.r>=pad.y-pad.h/2&&ball.y<pad.y+pad.h&&Math.abs(ball.x-pad.x)<pad.w/2+ball.r){
+    const hitp=(ball.x-pad.x)/(pad.w/2),a=-Math.PI/2+hitp*1.05,s=speed();ball.vx=Math.cos(a)*s;ball.vy=Math.sin(a)*s;ball.y=pad.y-pad.h/2-ball.r}
+  for(const b of bricks){if(ball.x+ball.r>b.x&&ball.x-ball.r<b.x+b.w&&ball.y+ball.r>b.y&&ball.y-ball.r<b.y+b.h){
+      const ox=Math.min(ball.x+ball.r-b.x,b.x+b.w-(ball.x-ball.r)),oy=Math.min(ball.y+ball.r-b.y,b.y+b.h-(ball.y-ball.r));
+      if(ox<oy)ball.vx*=-1;else ball.vy*=-1;b.hp--;if(b.hp<=0){b.dead=true;score+=10*level;burst(b.x+b.w/2,b.y+b.h/2,b.c)}else score+=5;hud();break}}
+  bricks=bricks.filter(b=>!b.dead);
+  if(!bricks.length){level++;hud();buildBricks();resetBall();return}
+  if(ball.y>Ht+20){lives--;hud();if(lives<=0){end();return}resetBall()}
+}
+function draw(){ctx.clearRect(0,0,Wd,Ht);
+  bricks.forEach(b=>{ctx.fillStyle=b.c;ctx.globalAlpha=b.hp>1?1:.85;ctx.beginPath();ctx.roundRect(b.x,b.y,b.w,b.h,5);ctx.fill();
+    if(b.hp>1){ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke()}ctx.globalAlpha=.3;ctx.fillStyle='#fff';ctx.fillRect(b.x+4,b.y+3,b.w-8,2)});
+  ctx.globalAlpha=1;
+  const g=ctx.createLinearGradient(pad.x-pad.w/2,0,pad.x+pad.w/2,0);g.addColorStop(0,'#7c9cff');g.addColorStop(.5,'#c084fc');g.addColorStop(1,'#2dd4bf');
+  ctx.fillStyle=g;ctx.shadowColor='#c084fc';ctx.shadowBlur=18;ctx.beginPath();ctx.roundRect(pad.x-pad.w/2,pad.y-pad.h/2,pad.w,pad.h,6);ctx.fill();
+  ctx.fillStyle='#fff';ctx.shadowColor='#fff';ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+  parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.08;p.l-=.03;ctx.globalAlpha=Math.max(p.l,0);ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,3,3)});
+  parts=parts.filter(p=>p.l>0);ctx.globalAlpha=1;
+  if(stuck&&running){ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='500 16px Inter,sans-serif';ctx.textAlign='center';ctx.fillText('Tippen oder Leertaste zum Starten',Wd/2,Ht/2+60)}}
+function loop(t){if(!running)return;const steps=Math.min(4,Math.round((t-last)/16.7)||1);last=t;for(let i=0;i<steps;i++)step();draw();if(running)requestAnimationFrame(loop)}
+function end(){running=false;draw();$('ovT').textContent='Game over';$('ovP').textContent=`${score} Punkte · Level ${level}`;$('go').textContent='Nochmal';$('ov').hidden=false}
+function toX(e){const r=cv.getBoundingClientRect();return (e.clientX-r.left)*(Wd/r.width)}
+cv.addEventListener('pointermove',e=>{if(pad)pad.x=toX(e)});
+cv.addEventListener('pointerdown',e=>{if(pad){pad.x=toX(e);launch()}});
+addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys[e.key]=true;if(e.key===' '){if(!running)start();else launch()}});
+addEventListener('keyup',e=>keys[e.key]=false);
+$('go').onclick=start;
+pad={x:Wd/2,y:Ht-36,w:96,h:12};level=1;buildBricks();resetBall();draw();
+</script>
+<script src="app.js" defer></script>
+</body>
+</html>
