@@ -1,7 +1,7 @@
 /* aksu.at – gemeinsame Helfer für alle Seiten */
 (function(){
   // Besucherstatistik (GoatCounter, ohne Cookies). Code eintragen, z. B. 'aksu' für https://aksu.goatcounter.com
-  var GOATCOUNTER_CODE = '';
+  var GOATCOUNTER_CODE = 'aksu';
   if (GOATCOUNTER_CODE && location.hostname === 'aksu.at') {
     var s = document.createElement('script');
     s.async = true; s.src = 'https://gc.zgo.at/count.js';
