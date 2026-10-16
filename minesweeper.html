@@ -3,28 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07090f">
 <title>Minesweeper · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>💣</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
   .board{display:grid;gap:2px;user-select:none;-webkit-user-select:none;touch-action:manipulation;margin:0 auto}
-  .c{aspect-ratio:1;border:0;border-radius:4px;padding:0;background:var(--accent);opacity:.85;
+  .c{aspect-ratio:1;border:0;border-radius:4px;padding:0;background:linear-gradient(145deg,rgba(124,156,255,.55),rgba(192,132,252,.45));opacity:.9;
      font-weight:600;font-size:clamp(11px,3.4vw,16px);display:grid;place-items:center;color:var(--ink);cursor:pointer}
   .c:hover{opacity:1}
-  .c.open{background:var(--soft);opacity:1;cursor:default}
+  .c.open{background:rgba(255,255,255,.05);opacity:1;cursor:default}
   .c.flag::after{content:"🚩";font-size:.9em}
   .c.boom{background:var(--danger);opacity:1}
-  .n1{color:#2b6cb0}.n2{color:#2f855a}.n3{color:#c53030}.n4{color:#553c9a}.n5{color:#9c4221}.n6{color:#2c7a7b}.n7{color:#1a202c}.n8{color:#718096}
-  @media (prefers-color-scheme: dark){.n1{color:#90cdf4}.n2{color:#9ae6b4}.n3{color:#feb2b2}.n4{color:#d6bcfa}.n5{color:#fbd38d}.n6{color:#81e6d9}.n7{color:#e2e8f0}.n8{color:#a0aec0}}
+  .n1{color:#90cdf4}.n2{color:#9ae6b4}.n3{color:#feb2b2}.n4{color:#d6bcfa}.n5{color:#fbd38d}.n6{color:#81e6d9}.n7{color:#e2e8f0}.n8{color:#a0aec0}
   .levels{display:flex;gap:6px;flex-wrap:wrap}
 </style>
 </head>
 <body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div class="grid-bg" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
 <div class="wrap">
-  <div class="top"><a class="back" href="./">← aksu.at</a><h1 style="font-size:24px">Minesweeper</h1></div>
+  <div class="top"><a class="back" href="./">← aksu</a><h1 style="font-size:26px">Minesweeper</h1></div>
   <div class="panel">
     <div class="bar">
       <div class="levels" role="group" aria-label="Schwierigkeit">

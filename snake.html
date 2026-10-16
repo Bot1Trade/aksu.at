@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07090f">
 <title>Snake · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>🐍</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
   canvas{display:block;width:100%;max-width:420px;aspect-ratio:1;margin:0 auto;border-radius:12px;background:var(--soft);touch-action:none}
@@ -17,8 +18,9 @@
 </style>
 </head>
 <body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div class="grid-bg" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
 <div class="wrap">
-  <div class="top"><a class="back" href="./">← aksu.at</a><h1 style="font-size:24px">Snake</h1></div>
+  <div class="top"><a class="back" href="./">← aksu</a><h1 style="font-size:26px">Snake</h1></div>
   <div class="panel">
     <div class="bar">
       <span class="stat">Punkte: <b id="score">0</b></span>

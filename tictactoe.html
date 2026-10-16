@@ -3,23 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07090f">
 <title>Tic-Tac-Toe · aksu.at</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='32' y='48' font-size='44' text-anchor='middle'>⭕</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
   .ttt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:320px;margin:0 auto}
-  .ttt button{aspect-ratio:1;justify-content:center;font-family:Fraunces,Georgia,serif;font-size:44px;border-radius:14px;padding:0}
+  .ttt button{aspect-ratio:1;justify-content:center;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:48px;border-radius:14px;padding:0}
   .ttt button.x{color:var(--accent)}.ttt button.o{color:var(--danger)}
-  .ttt button.win{background:var(--accent);color:var(--accent-ink)}
+  .ttt button.win{background:var(--grad);color:var(--accent-ink)}
   .levels{display:flex;gap:6px}
 </style>
 </head>
 <body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><div class="grid-bg" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
 <div class="wrap">
-  <div class="top"><a class="back" href="./">← aksu.at</a><h1 style="font-size:24px">Tic-Tac-Toe</h1></div>
+  <div class="top"><a class="back" href="./">← aksu</a><h1 style="font-size:26px">Tic-Tac-Toe</h1></div>
   <div class="panel">
     <div class="bar">
       <div class="levels" role="group" aria-label="Gegner">
