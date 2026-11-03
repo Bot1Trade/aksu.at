@@ -8,7 +8,7 @@
     s.setAttribute('data-goatcounter', 'https://' + GOATCOUNTER_CODE + '.goatcounter.com/count');
     document.head.appendChild(s);
   }
-  // Als App installierbar / offline spielbar
+  // Als App installierbar / offline nutzbar
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
     addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); });
   }

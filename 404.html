@@ -9,8 +9,8 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%23c084fc'/><text x='32' y='45' font-family='Arial' font-weight='bold' font-size='36' fill='%230a0d14' text-anchor='middle'>?</text></svg>">
 <link rel="preload" href="/font-space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/font-inter-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/style.css?v=5">
-<script src="/common.js?v=2"></script>
+<link rel="stylesheet" href="/style.css?v=6">
+<script src="/common.js?v=3"></script>
 <style>
   body{justify-content:center}
   .box{max-width:640px;margin:0 auto;padding:48px 20px;text-align:center}
@@ -27,12 +27,6 @@
   .path{font-family:"JetBrains Mono";font-size:13px;color:var(--danger);word-break:break-all}
   .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
   .acts .btn{padding:12px 18px;border-radius:12px}
-  .mini{margin-top:40px;padding:20px}
-  .arena{position:relative;height:220px;border-radius:14px;background:rgba(0,0,0,.3);border:1px solid var(--line);overflow:hidden;touch-action:manipulation}
-  .target{position:absolute;width:44px;height:44px;border-radius:12px;border:0;padding:0;background:var(--grad);box-shadow:0 0 30px rgba(192,132,252,.6);
-    display:grid;place-items:center;font-weight:700;color:var(--accent-ink);transition:left .25s ease,top .25s ease,transform .1s}
-  .target:active{transform:scale(.9)}
-  .mini .bar{margin:12px 0 0}
 </style>
 </head>
 <body>
@@ -43,33 +37,14 @@
   <p class="sub"><span id="s">Die Adresse gibt es nicht (mehr):</span><br><span class="path" id="p"></span></p>
   <div class="acts">
     <a class="btn primary" href="/" id="home">Zur Startseite</a>
-    <a class="btn" href="/#spiele" id="games">Zu den Spielen</a>
-  </div>
-  <div class="panel mini">
-    <div class="bar" style="margin-top:0;margin-bottom:12px">
-      <span class="stat" id="lbl">Wenn du schon hier bist: Fang das Quadrat!</span>
-      <span class="stat"><b id="hits">0</b> · <b id="tm">15.0</b>s</span>
-    </div>
-    <div class="arena" id="arena"><button class="target" id="tg" aria-label="Ziel">a</button></div>
-    <div class="bar"><span class="stat" id="best"></span><button id="re">Neu starten</button></div>
   </div>
 </div>
 <script>
 const de=AKSU.lang==='de';AKSU.achieve('lost');
 const $=id=>document.getElementById(id);
 if(!de){document.documentElement.lang='en';$('h').textContent='This page got lost.';$('s').textContent='This address doesn’t exist (anymore):';
-  $('home').textContent='Back to home';$('games').textContent='To the games';$('lbl').textContent='While you’re here: catch the square!';$('re').textContent='Restart'}
+  $('home').textContent='Back to home'}
 $('p').textContent=location.pathname+location.search;
-const A=$('arena'),T=$('tg');let hits=0,end=0,iv,best=0;
-try{best=+localStorage.getItem('catch-best')||0}catch(e){}
-const showBest=()=>$('best').textContent=(de?'Rekord: ':'Best: ')+best;showBest();
-function place(){const r=A.getBoundingClientRect();T.style.left=Math.random()*(r.width-44)+'px';T.style.top=Math.random()*(r.height-44)+'px'}
-function reset(){clearInterval(iv);hits=0;end=0;$('hits').textContent=0;$('tm').textContent='15.0';place()}
-T.addEventListener('pointerdown',e=>{e.preventDefault();if(end&&Date.now()>end)return;
-  if(!end){end=Date.now()+15000;iv=setInterval(()=>{const left=Math.max(0,(end-Date.now())/1000);$('tm').textContent=left.toFixed(1);
-    if(left<=0){clearInterval(iv);if(hits>best){best=hits;try{localStorage.setItem('catch-best',best)}catch(e){}}showBest();$('lbl').textContent=(de?`Zeit um! ${hits} Treffer.`:`Time’s up! ${hits} hits.`)}},50)}
-  hits++;$('hits').textContent=hits;place()});
-$('re').onclick=reset;addEventListener('resize',place);place();
 </script>
 <script src="/app.js" defer></script>
 </body>

@@ -1,7 +1,7 @@
 {
-  "name": "aksu – Domains & Spiele",
+  "name": "aksu – Domains",
   "short_name": "aksu",
-  "description": "aksu.at · aksu.co.at · aksu.ch – Kontakt und kleine Spiele",
+  "description": "aksu.at · aksu.co.at · aksu.ch – Kontakt",
   "start_url": "/?source=app",
   "scope": "/",
   "display": "standalone",
@@ -14,8 +14,7 @@
     {"src": "/icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
   ],
   "shortcuts": [
-    {"name": "Tetris", "url": "/tetris.html"},
-    {"name": "Snake", "url": "/snake.html"},
+    {"name": "Domains", "url": "/#domains"},
     {"name": "Kontakt", "url": "/#kontakt"}
   ]
 }

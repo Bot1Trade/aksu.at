@@ -1,7 +1,6 @@
-/* aksu.at Service Worker – offline spielbar, Updates kommen automatisch */
-const CACHE = 'aksu-v7';
-const CORE = ['/', '/index.html', '/style.css?v=5', '/app.js', '/common.js?v=2', '/404.html',
-  '/tetris.html', '/breakout.html', '/memory.html', '/minesweeper.html', '/snake.html', '/2048.html', '/tictactoe.html',
+/* aksu.at Service Worker – offline nutzbar, Updates kommen automatisch */
+const CACHE = 'aksu-v8';
+const CORE = ['/', '/index.html', '/style.css?v=6', '/app.js', '/common.js?v=3', '/404.html',
   '/icon-192.png', '/font-inter-400.woff2', '/font-inter-500.woff2', '/font-inter-600.woff2', '/font-inter-700.woff2',
   '/font-space-grotesk-500.woff2', '/font-space-grotesk-600.woff2', '/font-space-grotesk-700.woff2', '/font-jetbrains-mono-400.woff2', '/font-jetbrains-mono-500.woff2', '/icon-512.png', '/manifest.webmanifest'];
 self.addEventListener('install', e => {

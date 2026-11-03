@@ -23,8 +23,8 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="font-space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font-inter-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=5">
-<script src="common.js?v=2"></script>
+<link rel="stylesheet" href="style.css?v=6">
+<script src="common.js?v=3"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
  {"@type":"WebSite","@id":"https://aksu.at/#site","url":"https://aksu.at/","name":"aksu","inLanguage":["de-AT","en"],"description":"aksu.at, aksu.co.at und aksu.ch – Anfragen zu den Domains an mikail@aksu.at."},
@@ -174,18 +174,6 @@
   .wx small{display:block;color:var(--muted);font-size:12px}
   .daynight{font-family:"JetBrains Mono";font-size:11px;color:var(--muted);margin-left:auto;padding-left:12px}
 
-  /* Spiele */
-  .games{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-  @media (max-width:880px){.games{grid-template-columns:repeat(2,1fr)}}
-  .game{padding:22px;display:flex;flex-direction:column;gap:18px;text-decoration:none;min-height:220px;cursor:pointer;text-align:left;font:inherit;color:inherit}
-  .gico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;color:var(--c);
-    background:color-mix(in srgb,var(--c) 16%,transparent);box-shadow:0 0 30px color-mix(in srgb,var(--c) 25%,transparent)}
-  .game b{font-family:"Space Grotesk";font-size:20px;font-weight:600}
-  .game span{color:var(--muted);font-size:13.5px;line-height:1.5}
-  .game .play{margin-top:auto;font-size:13px;font-family:"JetBrains Mono";color:var(--c)}
-  .new{position:absolute;top:18px;right:18px;font-family:"JetBrains Mono";font-size:10px;letter-spacing:.1em;color:var(--accent-ink);background:var(--grad);border-radius:999px;padding:3px 8px}
-  @media (max-width:480px){.game{padding:18px;min-height:200px}.games{gap:12px}}
-
   /* Befehlspalette */
   .kbtn{gap:8px;color:var(--muted);padding:7px 10px;font-size:13px}
   .kbtn kbd{font-size:10px;padding:1px 5px}
@@ -208,18 +196,6 @@
   .pal-empty{padding:28px;text-align:center;color:var(--muted)}
   .pal-foot{display:flex;gap:14px;padding:10px 16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
   @media (max-width:640px){.pal{padding-top:72px}.pal-foot{display:none}}
-  /* Tages-Challenge */
-  .daily{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding:24px 28px;margin-bottom:18px;
-    border-color:rgba(251,191,36,.3);background:linear-gradient(110deg,rgba(251,191,36,.10),rgba(192,132,252,.06) 60%,rgba(255,255,255,.03))}
-  .daily.done{border-color:rgba(52,211,153,.35);background:linear-gradient(110deg,rgba(52,211,153,.10),rgba(45,212,191,.05) 60%,rgba(255,255,255,.03))}
-  .daily .kicker{color:#fbbf24;margin-bottom:8px}
-  .daily.done .kicker{color:var(--ok)}
-  .dl-t{font-family:"Space Grotesk";font-size:clamp(20px,2.6vw,26px);font-weight:600;display:flex;align-items:center;gap:12px}
-  .dl-s{color:var(--muted);font-size:14px;margin-top:6px}
-  .dl-r{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-  .dl-cd{font-family:"JetBrains Mono";font-size:13px;color:var(--muted);text-align:right}
-  .dl-cd b{display:block;font-size:20px;color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
-  .daily .btn{padding:12px 18px;border-radius:12px}
   /* Erfolge */
   .ach-wrap{padding:28px}
   .ach-top{display:flex;align-items:center;gap:18px;margin-bottom:24px;flex-wrap:wrap}
@@ -295,7 +271,6 @@
   <div class="links">
     <a href="#domains" data-i18n="nav.domains">Domains</a>
     <a href="#live" data-i18n="nav.live">Live</a>
-    <a href="#spiele" data-i18n="nav.games">Spiele</a>
     <a href="#erfolge" data-i18n="nav.ach">Erfolge</a>
     <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
   </div>
@@ -415,50 +390,13 @@
     </div>
   </section>
 
-  <section class="sec" id="spiele">
-    <div class="sec-head rv">
-      <div><div class="kicker">// Arcade</div><h2 data-i18n="g.h">Kleine Pause?<br><span class="mut">Eine Runde geht immer.</span></h2></div>
-      <p data-i18n="g.p">Sieben Klassiker, direkt im Browser – am Handy mit Wischen, am Rechner mit Tastatur. Rekorde werden gespeichert.</p>
-    </div>
-    <div class="card daily rv" id="daily">
-      <div><div class="kicker">// <span data-i18n="d.k">Tages-Challenge</span></div><div class="dl-t" id="dlT"></div><div class="dl-s" id="dlS"></div></div>
-      <div class="dl-r"><div class="dl-cd"><span data-i18n="d.new">Neue Challenge in</span><b id="dlCd">--:--:--</b></div><a class="btn primary" id="dlGo" href="#"></a></div>
-    </div>
-    <div class="games">
-      <a class="card game rv" href="tetris.html" style="--c:#c084fc"><span class="new" data-i18n="g.new">NEU</span>
-        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="11" width="6" height="6" rx="1.5"/><rect x="9" y="11" width="6" height="6" rx="1.5"/><rect x="16" y="11" width="6" height="6" rx="1.5"/><rect x="9" y="4" width="6" height="6" rx="1.5"/></svg></div>
-        <div><b>Tetris</b><br><span data-i18n="g.tetris">Reihen füllen, bevor es eng wird.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
-      <a class="card game rv" href="breakout.html" style="--c:#fb7185;transition-delay:.05s"><span class="new" data-i18n="g.new">NEU</span>
-        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="5" height="3" rx="1"/><rect x="9.5" y="3" width="5" height="3" rx="1"/><rect x="16" y="3" width="5" height="3" rx="1"/><circle cx="13" cy="13" r="2"/><path d="M7 20h10"/></svg></div>
-        <div><b>Breakout</b><br><span data-i18n="g.breakout">Steine zerlegen, Ball halten.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
-      <a class="card game rv" href="memory.html" style="--c:#7c9cff;transition-delay:.1s"><span class="new" data-i18n="g.new">NEU</span>
-        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="8" height="12" rx="2"/><rect x="13" y="8" width="8" height="12" rx="2" fill="currentColor" fill-opacity=".25"/></svg></div>
-        <div><b>Memory</b><br><span data-i18n="g.memory">Paare finden – mit Alpen-Motiven.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
-      <a class="card game rv" href="minesweeper.html" style="--c:#fb923c;transition-delay:.15s">
-        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="6"/><path d="M12 3v3M12 20v1M4 13H3M21 13h-1M6.3 7.3 5.6 6.6M18.4 6.6l-.7.7"/><circle cx="10" cy="11" r="1.2" fill="currentColor" stroke="none"/></svg></div>
-        <div><b>Minesweeper</b><br><span data-i18n="g.mines">Finde alle Minen, ohne eine zu erwischen.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
-      <a class="card game rv" href="snake.html" style="--c:#34d399">
-        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18h9a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h9"/><circle cx="19" cy="6" r="1.5" fill="currentColor" stroke="none"/></svg></div>
-        <div><b>Snake</b><br><span data-i18n="g.snake">Fressen, wachsen und bloß nicht anstoßen.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
-      <a class="card game rv" href="2048.html" style="--c:#fbbf24;transition-delay:.05s">
-        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor"/></svg></div>
-        <div><b>2048</b><br><span data-i18n="g.2048">Gleiche Zahlen schieben, bis 2048 steht.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
-      <a class="card game rv" href="tictactoe.html" style="--c:#a78bfa;transition-delay:.1s">
-        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></div>
-        <div><b>Tic-Tac-Toe</b><br><span data-i18n="g.ttt">Gegen den Computer – leicht oder unschlagbar.</span></div><div class="play" data-i18n="g.play">▶ spielen</div></a>
-      <button type="button" class="card game rv" id="toTerm" style="--c:#2dd4bf;transition-delay:.15s">
-        <div class="gico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 17 6-5-6-5M12 19h8"/></svg></div>
-        <div><b data-i18n="g.secret">Geheime Befehle</b><br><span data-i18n="g.secretP">Im Terminal verstecken sich ein paar Überraschungen.</span></div><div class="play" data-i18n="g.open">❯ Terminal öffnen</div></button>
-    </div>
-  </section>
-
   <section class="sec" id="erfolge">
     <div class="sec-head rv">
       <div><div class="kicker">// Achievements</div><h2 data-i18n="a.h">Erfolge<br><span class="mut">sammeln.</span></h2></div>
-      <p data-i18n="a.p">Spielen, Befehle entdecken, Geheimnisse finden – jeder Erfolg wird in diesem Browser gespeichert.</p>
+      <p data-i18n="a.p">Befehle entdecken, Geheimnisse finden – jeder Erfolg wird in diesem Browser gespeichert.</p>
     </div>
     <div class="card ach-wrap rv">
-      <div class="ach-top"><div class="ach-count"><b id="achN">0</b><span>/<span id="achT">20</span></span></div><div class="ach-bar"><i id="achBar"></i></div><span class="ach-lbl" data-i18n="a.lbl">freigeschaltet</span></div>
+      <div class="ach-top"><div class="ach-count"><b id="achN">0</b><span>/<span id="achT">5</span></span></div><div class="ach-bar"><i id="achBar"></i></div><span class="ach-lbl" data-i18n="a.lbl">freigeschaltet</span></div>
       <div class="ach-grid" id="achGrid"></div>
     </div>
   </section>
@@ -507,7 +445,7 @@
 <div class="pal" id="pal" role="dialog" aria-modal="true" aria-label="Befehlspalette">
   <div class="pal-box">
     <div class="pal-in"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="palQ" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="palList" data-i18n-ph="pal.ph" placeholder="Wohin? Spiel, Abschnitt oder Aktion …"><kbd>Esc</kbd></div>
+      <input id="palQ" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="palList" data-i18n-ph="pal.ph" placeholder="Wohin? Abschnitt oder Aktion …"><kbd>Esc</kbd></div>
     <div class="pal-list" id="palList" role="listbox"></div>
     <div class="pal-foot"><span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="pal.nav">auswählen</span></span><span><kbd>↵</kbd> <span data-i18n="pal.go">öffnen</span></span><span><kbd>Esc</kbd> <span data-i18n="pal.close">schließen</span></span></div>
   </div>
@@ -521,8 +459,8 @@ $('y').textContent=new Date().getFullYear();
 
 /* ---------- Sprache ---------- */
 const I18N={
- de:{'d.k':'Tages-Challenge','d.new':'Neue Challenge in','nav.domains':'Domains','nav.live':'Live','nav.games':'Spiele','nav.ach':'Erfolge','pal.btn':'Suche','pal.ph':'Wohin? Spiel, Abschnitt oder Aktion …','pal.nav':'auswählen','pal.go':'öffnen','pal.close':'schließen',
-  'a.h':'Erfolge<br><span class="mut">sammeln.</span>','a.p':'Spielen, Befehle entdecken, Geheimnisse finden – jeder Erfolg wird in diesem Browser gespeichert.','a.lbl':'freigeschaltet',
+ de:{'nav.domains':'Domains','nav.live':'Live','nav.ach':'Erfolge','pal.btn':'Suche','pal.ph':'Wohin? Abschnitt oder Aktion …','pal.nav':'auswählen','pal.go':'öffnen','pal.close':'schließen',
+  'a.h':'Erfolge<br><span class="mut">sammeln.</span>','a.p':'Befehle entdecken, Geheimnisse finden – jeder Erfolg wird in diesem Browser gespeichert.','a.lbl':'freigeschaltet',
   'c.save':'Kontakt speichern','c.qr':'Mit der Handykamera scannen<br>oder Screenshot zum Teilen.','nav.contact':'Kontakt','nav.cta':'Anfrage',
   'hero.pill':'Offen für Anfragen','hero.tag':'Drei Domains. <em>Ein Ansprechpartner.</em>',
   'hero.lead':'Sie interessieren sich für eine der Domains oder haben ein Anliegen dazu? Schreiben Sie mir – ich melde mich zeitnah persönlich.',
@@ -532,17 +470,13 @@ const I18N={
   'c.at':'Österreich','c.ch':'Schweiz','st.1':'Domains','st.2':'Länder · AT &amp; CH','st.3':'Ansprechpartner',
   'live.h':'Wien &amp; Zürich<br><span class="mut">gerade jetzt.</span>','live.p':'Gleiche Zeitzone, zwei Länder – mit aktuellem Wetter direkt vor Ort.',
   'city.vie':'Wien','city.zrh':'Zürich','wx.load':'Wetter lädt …',
-  'g.h':'Kleine Pause?<br><span class="mut">Eine Runde geht immer.</span>','g.p':'Sieben Klassiker, direkt im Browser – am Handy mit Wischen, am Rechner mit Tastatur. Rekorde und Erfolge werden gespeichert.',
-  'g.new':'NEU','g.play':'▶ spielen','g.tetris':'Reihen füllen, bevor es eng wird.','g.breakout':'Steine zerlegen, Ball halten.','g.memory':'Paare finden – mit Alpen-Motiven.',
-  'g.mines':'Finde alle Minen, ohne eine zu erwischen.','g.snake':'Fressen, wachsen und bloß nicht anstoßen.','g.2048':'Gleiche Zahlen schieben, bis 2048 steht.',
-  'g.ttt':'Gegen den Computer – leicht oder unschlagbar.','g.secret':'Geheime Befehle','g.secretP':'Im Terminal verstecken sich ein paar Überraschungen.','g.open':'❯ Terminal öffnen',
   'c.h':'Lassen Sie uns<br>sprechen.','c.note':'Schreiben Sie direkt per E-Mail oder nutzen Sie das Formular. Antwort in der Regel innerhalb von 24 Stunden.','c.copy':'Adresse kopieren',
   'f.name':'Name','f.nameP':'Ihr Name','f.mail':'E-Mail','f.mailP':'name@beispiel.at','f.topic':'Worum geht es?','f.general':'Allgemeine Anfrage','f.msg':'Nachricht','f.msgP':'Ihre Nachricht …',
   'f.send':'Nachricht senden','f.sending':'Wird gesendet …','f.ok':'✓ Danke! Ihre Nachricht ist unterwegs – ich melde mich bald.','f.err':'Das hat leider nicht geklappt. Bitte schreiben Sie direkt an mikail@aksu.at.',
   'f.invalid':'Bitte Name, gültige E-Mail und Nachricht ausfüllen.','f.privacy':'Die Nachricht wird über den Dienst FormSubmit an mich weitergeleitet und nur zur Beantwortung verwendet.',
   'toast.copy':'✓ E-Mail-Adresse kopiert','toast.konami':'🎉 Cheat aktiviert – Sie sind ein Profi!','toast.snd1':'🔊 Sound an','toast.snd0':'🔇 Sound aus'},
- en:{'d.k':'Daily challenge','d.new':'New challenge in','nav.domains':'Domains','nav.live':'Live','nav.games':'Games','nav.ach':'Achievements','pal.btn':'Search','pal.ph':'Where to? Game, section or action …','pal.nav':'select','pal.go':'open','pal.close':'close',
-  'a.h':'Achievements<br><span class="mut">to collect.</span>','a.p':'Play games, explore commands, find secrets – every achievement is saved in this browser.','a.lbl':'unlocked',
+ en:{'nav.domains':'Domains','nav.live':'Live','nav.ach':'Achievements','pal.btn':'Search','pal.ph':'Where to? Section or action …','pal.nav':'select','pal.go':'open','pal.close':'close',
+  'a.h':'Achievements<br><span class="mut">to collect.</span>','a.p':'Explore commands, find secrets – every achievement is saved in this browser.','a.lbl':'unlocked',
   'c.save':'Save contact','c.qr':'Scan with your phone camera<br>or screenshot to share.','nav.contact':'Contact','nav.cta':'Inquire',
   'hero.pill':'Open for inquiries','hero.tag':'Three domains. <em>One contact.</em>',
   'hero.lead':'Interested in one of these domains or have a question about them? Drop me a line – I’ll get back to you personally and promptly.',
@@ -552,10 +486,6 @@ const I18N={
   'c.at':'Austria','c.ch':'Switzerland','st.1':'Domains','st.2':'Countries · AT &amp; CH','st.3':'Contact person',
   'live.h':'Vienna &amp; Zurich<br><span class="mut">right now.</span>','live.p':'Same time zone, two countries – with live local weather.',
   'city.vie':'Vienna','city.zrh':'Zurich','wx.load':'Loading weather …',
-  'g.h':'Need a break?<br><span class="mut">One more round.</span>','g.p':'Seven classics right in your browser – swipe on mobile, keyboard on desktop. High scores are saved.',
-  'g.new':'NEW','g.play':'▶ play','g.tetris':'Clear lines before it gets tight.','g.breakout':'Smash bricks, keep the ball.','g.memory':'Find the pairs – alpine edition.',
-  'g.mines':'Find all mines without hitting one.','g.snake':'Eat, grow and don’t crash.','g.2048':'Slide matching numbers up to 2048.',
-  'g.ttt':'Against the computer – easy or unbeatable.','g.secret':'Secret commands','g.secretP':'The terminal hides a few surprises.','g.open':'❯ Open terminal',
   'c.h':'Let’s<br>talk.','c.note':'Email me directly or use the form. I usually reply within 24 hours.','c.copy':'Copy address',
   'f.name':'Name','f.nameP':'Your name','f.mail':'Email','f.mailP':'name@example.com','f.topic':'What is it about?','f.general':'General inquiry','f.msg':'Message','f.msgP':'Your message …',
   'f.send':'Send message','f.sending':'Sending …','f.ok':'✓ Thanks! Your message is on its way – I’ll be in touch soon.','f.err':'Sorry, that didn’t work. Please email mikail@aksu.at directly.',
@@ -571,7 +501,6 @@ function setLang(l){lang=l;store.set('lang',l);document.documentElement.lang=l;
   renderClocks&&renderClocks(true);
   if(window.AKSU&&AKSU.lang!==l)AKSU.setLang(l);
   typeof renderAch==='function'&&renderAch();
-  typeof renderDaily==='function'&&renderDaily();
 }
 document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{setLang(b.dataset.lang);blip(660)});
 
@@ -718,13 +647,13 @@ function matrix(){if(reduce)return;const c=$('matrix'),g=c.getContext('2d');c.st
     if(Date.now()-t0>9000)return stop();requestAnimationFrame(f)})()}
 
 /* ---------- Terminal ---------- */
+let openTerm;
 (()=>{const out=$('out'),inp=$('cmd'),body=$('termBody');let hist=[],hp=0,busy=false,intro=true;
   const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   const print=(html='')=>{const d=document.createElement('div');d.innerHTML=html||'&nbsp;';out.appendChild(d);body.scrollTop=body.scrollHeight;return d};
   const L=(de,en)=>lang==='de'?de:en;
   const DOMS={'aksu.at':['Österreich','Austria','aktiv · diese Seite','active · this site'],'aksu.co.at':['Österreich','Austria','registriert','registered'],'aksu.ch':['Schweiz','Switzerland','registriert','registered']};
-  const GAMES=['tetris','breakout','memory','minesweeper','snake','2048','tictactoe'];
   function whois(d){d=(d||'').toLowerCase().replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/$/,'');
     if(!d){return print(L('<span class="k">Verwendung:</span> whois aksu.at | aksu.co.at | aksu.ch','<span class="k">usage:</span> whois aksu.at | aksu.co.at | aksu.ch'))}
     const x=DOMS[d];if(!x)return print(`<span class="e">${esc(d)}</span> – ${L('gehört nicht zum Portfolio. Probier: domains','is not in the portfolio. Try: domains')}`);
@@ -733,21 +662,18 @@ function matrix(){if(reduce)return;const c=$('matrix'),g=c.getContext('2d');c.st
   const C={
     help(){print(L('<span class="a">Verfügbare Befehle</span>','<span class="a">Available commands</span>'));
       [['whois &lt;domain&gt;',L('Infos zu einer Domain','info about a domain')],['domains',L('alle Domains auflisten','list all domains')],['contact',L('E-Mail schreiben','write an email')],
-       ['copy',L('E-Mail-Adresse kopieren','copy email address')],['games',L('Spiele anzeigen','list games')],['play &lt;spiel&gt;',L('Spiel starten','start a game')],
+       ['copy',L('E-Mail-Adresse kopieren','copy email address')],
        ['time · weather',L('Wien &amp; Zürich live','Vienna &amp; Zurich live')],['lang de|en',L('Sprache wechseln','switch language')],['sound on|off',L('Sound umschalten','toggle sound')],
-       ['erfolge',L('deine Erfolge','your achievements')],['heute',L('Tages-Challenge','daily challenge')],['clear',L('Bildschirm leeren','clear screen')]].forEach(([a,b])=>print(`  <span class="p">${a.padEnd(18,' ')}</span><span class="k">${b}</span>`));
+       ['erfolge',L('deine Erfolge','your achievements')],['clear',L('Bildschirm leeren','clear screen')]].forEach(([a,b])=>print(`  <span class="p">${a.padEnd(18,' ')}</span><span class="k">${b}</span>`));
       print(L('<span class="k">… und ein paar versteckte. Neugierig? 😉</span>','<span class="k">… plus a few hidden ones. Curious? 😉</span>'))},
     whois:a=>whois(a[0]),
     domains(){Object.keys(DOMS).forEach(d=>print(`  <span class="g">●</span> <span class="v">${d.padEnd(12,' ')}</span><span class="k">${L(DOMS[d][0],DOMS[d][1])}</span>`))},
-    ls(){print('<span class="v">about.txt  domains/  games/  kontakt.vcf</span>')},
+    ls(){print('<span class="v">about.txt  domains/  kontakt.vcf</span>')},
     cat(a){const f=(a[0]||'').toLowerCase();if(f==='about.txt')print(L('aksu – drei Domains, ein Name. Betrieben von Mikail Aksu.\nAnfragen jederzeit willkommen.','aksu – three domains, one name. Run by Mikail Aksu.\nInquiries always welcome.'));
       else if(f==='kontakt.vcf')print('BEGIN:VCARD\nFN:Mikail Aksu\nEMAIL:mikail@aksu.at\nURL:https://aksu.at\nEND:VCARD');else print(`cat: ${esc(f||'?')}: ${L('Datei nicht gefunden','no such file')}`)},
     contact(){print(L('Öffne E-Mail-Programm …','Opening mail client …'));location.href='mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu-Domains'},
     mail(){C.contact()},
     async copy(){const ok=await copyMail();print(ok?`<span class="g">✓</span> ${L('kopiert','copied')}: mikail@aksu.at`:'mikail@aksu.at')},
-    games(){GAMES.forEach(g=>print(`  <span class="p">▶</span> <a href="${g}.html">${g}</a>`));print(L('<span class="k">Starten mit: play tetris</span>','<span class="k">Start with: play tetris</span>'))},
-    play(a){const g=(a[0]||'').toLowerCase().replace('tic-tac-toe','tictactoe');if(!GAMES.includes(g))return print(L('Welches Spiel? ','Which game? ')+GAMES.join(', '));
-      print(`${L('Starte','Launching')} <span class="a">${g}</span> …`);setTimeout(()=>location.href=g+'.html',500)},
     time(){clocks.forEach(c=>{const p=parts_(c.dataset.tz),pad=n=>String(n).padStart(2,'0');print(`  <span class="v">${(c.querySelector('.city span').textContent).padEnd(8,' ')}</span> ${pad(p.h)}:${pad(p.m)}:${pad(p.s)}`)})},
     date(){print(new Date().toLocaleString(lang==='de'?'de-AT':'en-GB',{dateStyle:'full',timeStyle:'medium',timeZone:'Europe/Vienna'}))},
     weather(){clocks.forEach(c=>{const d=wxData[c.dataset.tz],n=c.querySelector('.city span').textContent;if(!d)return print(`  ${n}: ${L('noch keine Daten','no data yet')}`);
@@ -759,25 +685,22 @@ function matrix(){if(reduce)return;const c=$('matrix'),g=c.getContext('2d');c.st
     echo(a){print(esc(a.join(' ')))},
     sudo(){print(`<span class="e">${L('Zugriff verweigert.','Permission denied.')}</span> ${L('Netter Versuch 😄','Nice try 😄')}`);blip(160,.25,'sawtooth',.04)},
     rm(){print(L('Schön wär’s. 🙂 Hier wird nichts gelöscht.','Nice try. 🙂 Nothing gets deleted here.'))},
-    exit(){print(L('Es gibt kein Entkommen … probier lieber <span class="p">games</span>.','There is no escape … try <span class="p">games</span> instead.'))},
+    exit(){print(L('Es gibt kein Entkommen … probier lieber <span class="p">help</span>.','There is no escape … try <span class="p">help</span> instead.'))},
     matrix(){print(L('Wach auf, Neo … (Klick oder Esc beendet)','Wake up, Neo … (click or Esc to exit)'));setTimeout(matrix,400)},
     party(){print('🎉🎉🎉');party()},confetti(){C.party()},
     coffee(){print('    ( (\n     ) )\n  ........\n  |      |]\n  \\      /\n   `----´');print(L('Frisch gebrüht. ☕','Freshly brewed. ☕'))},
     async hack(){busy=true;const steps=L(['Verbinde mit Mainframe','Umgehe Firewall','Entschlüssle Passwörter','Lade Kaffeevorräte'],['Connecting to mainframe','Bypassing firewall','Decrypting passwords','Loading coffee supplies']);
       for(const s of steps){const d=print(`<span class="k">${s}</span> [${' '.repeat(20)}]`);for(let i=1;i<=20;i++){await sleep(25);d.innerHTML=`<span class="k">${s}</span> [<span class="g">${'#'.repeat(i)}</span>${' '.repeat(20-i)}] ${i*5}%`;if(i%4===0)blip(300+i*30,.02,'square',.015)}}
       print(`<span class="g">${L('ZUGRIFF GEWÄHRT','ACCESS GRANTED')}</span> … ${L('auf ein Glas Wasser. 💧','to a glass of water. 💧')}`);busy=false},
-    erfolge(){const u=AKSU.unlocked(),n=Object.keys(u).length;print(`<span class="a">${L('Erfolge','Achievements')}</span> ${n}/${AKSU.list.length}`);
+    erfolge(){const u=AKSU.unlocked(),n=AKSU.list.filter(a=>u[a.id]).length;print(`<span class="a">${L('Erfolge','Achievements')}</span> ${n}/${AKSU.list.length}`);
       AKSU.list.forEach(a=>{const d=a[lang]||a.de;print(`  ${u[a.id]?'<span class="g">✓</span> '+a.i:'<span class="k">·  🔒</span>'} ${u[a.id]?'<span class="v">'+d[0]+'</span>':'<span class="k">'+d[0]+'</span>'}`)})},
     achievements(){C.erfolge()},
-    heute(){const d=AKSU.daily();print(`🎯 <span class="v">${AKSU.challengeText(d.c)}</span>`);print(d.done?`<span class="g">✓ ${L('geschafft','done')}</span>`:`<span class="k">${L('noch offen – starte mit','still open – start with')}</span> <span class="p">play ${d.c.g}</span>`);if(d.streak)print(`🔥 ${L('Serie','streak')}: ${d.streak}`)},
-    today(){C.heute()},daily(){C.heute()},
     history(){hist.forEach((h,i)=>print(`  ${String(i+1).padStart(3,' ')}  ${esc(h)}`))},
     secret(){print(L('Tipp: Auf der Seite (nicht hier) ↑ ↑ ↓ ↓ ← → ← → B A tippen. 🤫','Hint: on the page (not here) type ↑ ↑ ↓ ↓ ← → ← → B A. 🤫'))},
     hello(){print(L('Servus! 👋','Hi there! 👋'))},hallo(){C.hello()},servus(){print('Servus! Grüezi! 👋')},grüezi(){C.servus()},
     neofetch(){print(`<span class="a">     ▄▀▀▄     </span> <span class="v">gast@aksu</span>
 <span class="a">    █▄▄▄█     </span> <span class="k">os</span>      aksu.at OS
 <span class="a">    █   █     </span> <span class="k">domains</span> 3 (.at .co.at .ch)
-<span class="a">              </span> <span class="k">games</span>   7
 <span class="a">              </span> <span class="k">uptime</span>  ${Math.floor(performance.now()/1000)}s
 <span class="a">              </span> <span class="k">shell</span>   aksu-zsh`)}
   };
@@ -793,11 +716,11 @@ function matrix(){if(reduce)return;const c=$('matrix'),g=c.getContext('2d');c.st
     else if(e.key==='ArrowDown'){e.preventDefault();if(hp<hist.length-1){hp++;inp.value=hist[hp]}else{hp=hist.length;inp.value=''}}
     else if(e.key==='Tab'){e.preventDefault();const v=inp.value.toLowerCase(),parts=v.split(' ');
       if(parts.length===1){const m=NAMES.filter(n=>n.startsWith(v));if(m.length===1)inp.value=m[0]+' ';else if(m.length)print(m.join('  '))}
-      else{const pool=parts[0]==='whois'?Object.keys(DOMS):parts[0]==='play'?GAMES:parts[0]==='lang'?['de','en']:[];const m=pool.filter(n=>n.startsWith(parts[1]));if(m.length===1)inp.value=parts[0]+' '+m[0]}}
+      else{const pool=parts[0]==='whois'?Object.keys(DOMS):parts[0]==='lang'?['de','en']:[];const m=pool.filter(n=>n.startsWith(parts[1]));if(m.length===1)inp.value=parts[0]+' '+m[0]}}
     else if(e.key==='l'&&e.ctrlKey){e.preventDefault();out.innerHTML=''}
     else if(e.key.length===1)blip(1800+Math.random()*400,.015,'square',.008)});
   $('term').addEventListener('click',e=>{if(!e.target.closest('a'))inp.focus({preventScroll:true})});
-  $('toTerm').onclick=()=>{$('term').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});setTimeout(()=>{inp.focus({preventScroll:true});if(!inp.value)inp.value='help'},600)};
+  openTerm=()=>{$('term').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});setTimeout(()=>{inp.focus({preventScroll:true});if(!inp.value)inp.value='help'},600)};
   // Intro
   (async()=>{inp.disabled=true;$('line').style.opacity='.4';
     const type=async s=>{const d=print('<span class="p">❯</span> ');for(const ch of s){if(!intro)break;d.innerHTML+=esc(ch);await sleep(reduce?0:45+Math.random()*45)}return d};
@@ -805,17 +728,6 @@ function matrix(){if(reduce)return;const c=$('matrix'),g=c.getContext('2d');c.st
     print('');print(L('<span class="k">Willkommen! Tippe</span> <span class="p">help</span> <span class="k">für alle Befehle.</span>','<span class="k">Welcome! Type</span> <span class="p">help</span> <span class="k">for all commands.</span>'));print('');
     inp.disabled=false;$('line').style.opacity='1'})();
 })();
-
-/* ---------- Tages-Challenge ---------- */
-function renderDaily(){if(!window.AKSU)return;const d=AKSU.daily(),L=(a,b)=>lang==='de'?a:b,name=AKSU.gameName(d.c.g);
-  $('daily').classList.toggle('done',d.done);
-  $('dlT').innerHTML=(d.done?'✅ ':'🎯 ')+AKSU.challengeText(d.c);
-  $('dlS').innerHTML=d.done?L('Geschafft! Morgen wartet die nächste.','Done! Come back tomorrow for the next one.')+(d.streak?` · 🔥 ${L('Serie','Streak')}: ${d.streak}`:'')
-    :(d.streak?`🔥 ${L('Deine Serie','Your streak')}: ${d.streak} – ${L('heute weitermachen!','keep it going today!')}`:L('Schaff sie heute und starte eine Serie.','Complete it today to start a streak.'));
-  $('dlGo').textContent=(d.done?L('Nochmal spielen: ','Play again: '):L('Los geht’s: ','Let’s go: '))+name;$('dlGo').href=d.c.g+'.html'}
-(function cd(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);const s=Math.max(0,Math.floor((m-n)/1000)),p=x=>String(x).padStart(2,'0');
-  $('dlCd').textContent=`${p(Math.floor(s/3600))}:${p(Math.floor(s/60)%60)}:${p(s%60)}`;if(s===0)setTimeout(renderDaily,1200);setTimeout(cd,1000)})();
-addEventListener('aksu:daily',renderDaily);addEventListener('pageshow',renderDaily);
 
 /* ---------- Befehlspalette ---------- */
 (()=>{const P=$('pal'),Q=$('palQ'),Lst=$('palList');let items=[],sel=0,lastFocus;
@@ -825,16 +737,12 @@ addEventListener('aksu:daily',renderDaily);addEventListener('pageshow',renderDai
   function build(){return [
     {g:L('Abschnitte','Sections'),i:'🌐',t:'Domains',k:'aksu at co ch portfolio',run:go('domains')},
     {g:L('Abschnitte','Sections'),i:'🕒',t:L('Wien & Zürich live','Vienna & Zurich live'),k:'uhr wetter clock weather time',run:go('live')},
-    {g:L('Abschnitte','Sections'),i:'🕹️',t:L('Spiele','Games'),k:'arcade',run:go('spiele')},
     {g:L('Abschnitte','Sections'),i:'🏅',t:L('Erfolge','Achievements'),k:'badges abzeichen',run:go('erfolge')},
-    {g:L('Abschnitte','Sections'),i:'🎯',t:L('Tages-Challenge','Daily challenge'),k:'heute today daily serie streak',run:go('daily')},
     {g:L('Abschnitte','Sections'),i:'✉️',t:L('Kontakt','Contact'),k:'formular form anfrage',run:go('kontakt')},
-    ...[['Tetris','🧱','tetris'],['Breakout','🧨','breakout'],['Memory','🧠','memory'],['Minesweeper','💣','minesweeper'],['Snake','🐍','snake'],['2048','🔢','2048'],['Tic-Tac-Toe','❌','tictactoe']]
-      .map(([t,i,u])=>({g:L('Spiele','Games'),i,t,k:'spiel game play '+u,s:'↗',run:nav(u+'.html')})),
     {g:L('Aktionen','Actions'),i:'📋',t:L('E-Mail-Adresse kopieren','Copy email address'),k:'copy mail',run:()=>copyMail()},
     {g:L('Aktionen','Actions'),i:'✍️',t:L('E-Mail schreiben','Write an email'),k:'mail contact',run:nav('mailto:mikail@aksu.at?subject=Anfrage%20zu%20aksu-Domains')},
     {g:L('Aktionen','Actions'),i:'👤',t:L('Kontakt speichern (vCard)','Save contact (vCard)'),k:'vcf visitenkarte',run:()=>$('vcf').click()},
-    {g:L('Aktionen','Actions'),i:'⌨️',t:L('Terminal öffnen','Open terminal'),k:'shell konsole console',run:()=>$('toTerm').click()},
+    {g:L('Aktionen','Actions'),i:'⌨️',t:L('Terminal öffnen','Open terminal'),k:'shell konsole console',run:()=>openTerm()},
     {g:L('Aktionen','Actions'),i:'🌍',t:L('Switch to English','Auf Deutsch wechseln'),k:'sprache language de en',run:()=>setLang(lang==='de'?'en':'de')},
     {g:L('Aktionen','Actions'),i:soundOn?'🔇':'🔊',t:soundOn?L('Sound aus','Sound off'):L('Sound an','Sound on'),k:'ton audio',run:()=>$('snd').click()},
     {g:L('Aktionen','Actions'),i:'🎉',t:L('Konfetti!','Confetti!'),k:'party fun',run:()=>party()},
@@ -842,7 +750,7 @@ addEventListener('aksu:daily',renderDaily);addEventListener('pageshow',renderDai
   const norm=x=>x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   function render(){const q=norm(Q.value.trim());items=build().filter(it=>!q||norm(it.t+' '+it.k+' '+it.g).includes(q));
     if(sel>=items.length)sel=0;
-    if(!items.length){Lst.innerHTML=`<div class="pal-empty">${L('Nichts gefunden – probier „tetris“ oder „kontakt“.','Nothing found – try “tetris” or “contact”.')}</div>`;return}
+    if(!items.length){Lst.innerHTML=`<div class="pal-empty">${L('Nichts gefunden – probier „domains“ oder „kontakt“.','Nothing found – try “domains” or “contact”.')}</div>`;return}
     let g='',h='';items.forEach((it,i)=>{if(it.g!==g){g=it.g;h+=`<div class="pal-g">${g}</div>`}
       h+=`<button type="button" class="pal-i" role="option" id="pi${i}" data-i="${i}" aria-selected="${i===sel}"><span class="pi">${it.i}</span>${it.t}${it.s?`<small>${it.s}</small>`:''}</button>`});
     Lst.innerHTML=h;Q.setAttribute('aria-activedescendant','pi'+sel)}
